@@ -1,0 +1,20 @@
+yous/vanilli.sh
+
+robbyrussell/oh-my-zsh folder:plugins/colored-man-pages
+robbyrussell/oh-my-zsh folder:plugins/command-not-found
+robbyrussell/oh-my-zsh folder:plugins/common-aliases
+robbyrussell/oh-my-zsh folder:plugins/extract
+robbyrussell/oh-my-zsh folder:plugins/fancy-ctrl-z
+robbyrussell/oh-my-zsh folder:plugins/ssh-agent
+robbyrussell/oh-my-zsh folder:plugins/tig
+robbyrussell/oh-my-zsh folder:plugins/ubuntu
+
+caarlos0/zsh-mkc
+mafredri/zsh-async
+simnalamburt/cgitc
+zsh-users/zsh-completions
+
+# See https://github.com/caarlos0/dotfiles/blob/master/antibody/bundles.txt
+sindresorhus/pure
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
