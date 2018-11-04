@@ -1,13 +1,13 @@
 yous/vanilli.sh
 
-robbyrussell/oh-my-zsh folder:plugins/colored-man-pages
-robbyrussell/oh-my-zsh folder:plugins/command-not-found
-robbyrussell/oh-my-zsh folder:plugins/common-aliases
-robbyrussell/oh-my-zsh folder:plugins/extract
-robbyrussell/oh-my-zsh folder:plugins/fancy-ctrl-z
-robbyrussell/oh-my-zsh folder:plugins/ssh-agent
-robbyrussell/oh-my-zsh folder:plugins/tig
-robbyrussell/oh-my-zsh folder:plugins/ubuntu
+robbyrussell/oh-my-zsh path:plugins/colored-man-pages
+robbyrussell/oh-my-zsh path:plugins/command-not-found
+robbyrussell/oh-my-zsh path:plugins/common-aliases
+robbyrussell/oh-my-zsh path:plugins/extract
+robbyrussell/oh-my-zsh path:plugins/fancy-ctrl-z
+robbyrussell/oh-my-zsh path:plugins/ssh-agent
+robbyrussell/oh-my-zsh path:plugins/tig
+robbyrussell/oh-my-zsh path:plugins/ubuntu
 
 caarlos0/zsh-mkc
 mafredri/zsh-async

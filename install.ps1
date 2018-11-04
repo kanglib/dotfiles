@@ -15,6 +15,8 @@ inst gitconfig ~\.gitconfig
 inst gitignore ~\.config\gitignore
 ni -Force ~\.config\gitconfig.local >$null
 
+inst pythonrc ~\.config\pythonrc
+setx PYTHONSTARTUP $env:HOME\.config\pythonrc
 md -Force ~\pip >$null
 inst pip.conf ~\pip\pip.ini
 

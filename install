@@ -5,7 +5,7 @@ mkdir -p ~/.config
 mkdir -p ~/.local/bin
 
 info() {
-    printf "\e[1m\e[96mInstalling %s...\e[m\n" $1
+    printf "\e[1;36mInstalling %s...\e[m\n" $1
 }
 
 inst() {
@@ -28,7 +28,8 @@ info cheat.sh
 curl -fso ~/.local/bin/cht.sh https://cht.sh/:cht.sh
 chmod +x ~/.local/bin/cht.sh
 
-info pyenv
+info pythonrc
+inst pythonrc ~/.config/pythonrc
 mkdir -p ~/.config/pip
 inst pip.conf ~/.config/pip/pip.conf
 export PYENV_ROOT=~/.local/share/pyenv
@@ -79,3 +80,5 @@ if [[ $(command -v vim) ]]; then
     curl -fsLo ~/.local/bin/fshow git.io/vpxBg
     chmod +x ~/.local/bin/fshow
 fi
+
+printf "\e[1;36mDone!\e[m\n"

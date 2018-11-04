@@ -13,8 +13,13 @@ bindkey "\e[A" history-substring-search-up
 bindkey "\e[B" history-substring-search-down
 
 unalias ag 2>/dev/null
+unalias fd 2>/dev/null
+unalias ff 2>/dev/null
 alias -g ...=../..
 alias -g ....=../../..
+alias gdb="gdb -q"
+alias latexmk="latexmk -pdf -interaction=nonstopmode -halt-on-error"
+alias pk="pkill -9 -t"
 
 if [[ $(command -v exa) ]]; then
     alias l="LANG=C.UTF-8 exa --git  --time-style=long-iso -l"
@@ -35,5 +40,5 @@ alias lar="la -R"
 
 # Should be at last
 if [[ $(command -v tmux) && ! $TMUX ]]; then
-    TERM=putty-256color tmux -2 new -As 0
+    tmux -2 new -As 0
 fi

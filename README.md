@@ -20,6 +20,11 @@
     ./install
     # (Re)start Zsh
 
+## pythonrc
+Python prompts are colorized unless the interpreters are started directly on
+Windows, or [ANSICON](https://github.com/adoxa/ansicon) and
+[psutil](https://pypi.org/project/psutil/) are not installed.
+
 ## vimrc
 ### Clang on Windows
 I use [Clang](http://releases.llvm.org/download.html) as the default C/C++
@@ -30,5 +35,5 @@ The installer tries to install YouCompleteMe on supported systems. Refer to
 [the manual page](https://github.com/Valloric/YouCompleteMe/blob/master/README.md)
 to check the requirements.
 
-    sudo apt-get install build-essential cmake python-dev python3-dev
+    sudo apt install build-essential cmake python-dev python3-dev
     vim +PlugUpdate! +qa
