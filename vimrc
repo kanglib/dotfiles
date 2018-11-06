@@ -8,6 +8,8 @@ source $VIMRUNTIME/mswin.vim
 behave xterm
 silent! unmap <C-F>
 silent! unmap <C-H>
+silent! unmap! <C-F>
+silent! unmap! <C-H>
 unmap <C-Y>
 if s:is_win
   set runtimepath^=~/.vim
@@ -41,6 +43,7 @@ set mouse=a
 set nobackup noundofile
 set nofoldenable
 set number
+set regexpengine=1
 set shortmess+=a
 set showcmd
 set sw=4 sts=-1 et
@@ -85,16 +88,22 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.config/ycm_extra_conf.py'
+let g:ycm_max_num_candidates = 10
 let g:ycm_semantic_triggers = {
-      \ 'c': ['->', '.', 're![a-zA-Z_]+\w'],
-      \ 'cpp': ['->', '.', '::', 're![a-zA-Z_]+\w'],
-      \ 'php': ['->', '::', 're![a-zA-Z_]+\w'],
-      \ 'python,vb': ['.', 're![a-zA-Z_]+\w'],
-      \ 'ruby': ['.', '::', 're![a-zA-Z_]+\w'],
-      \ 'lua': ['.', ':', 're![a-zA-Z_]+\w'],
+      \ 'c':                          ['->', '.', 're![a-zA-Z_]+\w'],
+      \ 'cpp,cuda':                   ['->', '.', '::', 're![a-zA-Z_]+\w'],
+      \ 'php':                        ['->', '::', 're![a-zA-Z_]+\w'],
+      \ 'cs,go,javascript,python,vb': ['.', 're![a-zA-Z_]+\w'],
+      \ 'ruby,rust':                  ['.', '::', 're![a-zA-Z_]+\w'],
+      \ 'lua':                        ['.', ':', 're![a-zA-Z_]+\w'],
       \ }
-autocmd vimrc FileType * let g:ycm_auto_trigger = 0
-autocmd vimrc FileType c,cpp,php,python,vb,ruby,lua let g:ycm_auto_trigger = 1
+autocmd vimrc FileType *                          let g:ycm_auto_trigger = 0
+autocmd vimrc FileType c                          let g:ycm_auto_trigger = 1
+autocmd vimrc FileType cpp,cuda                   let g:ycm_auto_trigger = 1
+autocmd vimrc FileType php                        let g:ycm_auto_trigger = 1
+autocmd vimrc FileType cs,go,javascript,python,vb let g:ycm_auto_trigger = 1
+autocmd vimrc FileType ruby,rust                  let g:ycm_auto_trigger = 1
+autocmd vimrc FileType lua                        let g:ycm_auto_trigger = 1
 if !s:is_win
   Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 endif
@@ -103,7 +112,7 @@ endif
 if has('python') || has('python3')
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-  let g:UltiSnipsExpandTrigger = '<C-D>'
+  let g:UltiSnipsExpandTrigger = '<C-F>'
 endif
 
 " fzf
@@ -133,19 +142,19 @@ imap <C-X><C-F> <Plug>(fzf-complete-path)
 " Search enhancement
 Plug 'osyo-manga/vim-anzu'
 set statusline=%{anzu#search_status()}
-let g:anzu_status_format = ' %p (%i/%l)'
+let g:anzu_status_format = ' %p (%i/%l) %#WarningMsg#%w'
 let g:airline#extensions#anzu#enabled = 0
 Plug 'haya14busa/incsearch.vim'
 nmap /  <Plug>(incsearch-forward)
 nmap ?  <Plug>(incsearch-backward)
 nmap g/ <Plug>(incsearch-stay)
 let g:incsearch#auto_nohlsearch = 1
-nmap n  <Plug>(incsearch-nohl)zz<Plug>(anzu-n-with-echo)
-nmap N  <Plug>(incsearch-nohl)zz<Plug>(anzu-N-with-echo)
-nmap *  <Plug>(incsearch-nohl)zz<Plug>(anzu-star-with-echo)
-nmap #  <Plug>(incsearch-nohl)zz<Plug>(anzu-sharp-with-echo)
-nmap g* <Plug>(incsearch-nohl-g*)zz<Plug>(anzu-update-search-status-with-echo)
-nmap g# <Plug>(incsearch-nohl-g#)zz<Plug>(anzu-update-search-status-with-echo)
+nmap n  <Plug>(incsearch-nohl)<Plug>(anzu-n-with-echo)
+nmap N  <Plug>(incsearch-nohl)<Plug>(anzu-N-with-echo)
+nmap *  <Plug>(incsearch-nohl)<Plug>(anzu-star-with-echo)
+nmap #  <Plug>(incsearch-nohl)<Plug>(anzu-sharp-with-echo)
+nmap g* <Plug>(incsearch-nohl-g*)<Plug>(anzu-update-search-status-with-echo)
+nmap g# <Plug>(incsearch-nohl-g#)<Plug>(anzu-update-search-status-with-echo)
 let g:incsearch#emacs_like_keymap = 1
 Plug 'hauleth/sad.vim'
 
@@ -166,19 +175,33 @@ set ttimeoutlen=10
 " Git support
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+let g:gitgutter_async = 0
 set updatetime=250
+if exists('&signcolumn')
+  set signcolumn=yes
+else
+  let g:gitgutter_sign_column_always = 1
+endif
 
 " Language support
+let g:python_highlight_all = 0
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown']
+" Too much
+let g:python_highlight_builtins = 0
+let g:python_highlight_exceptions = 0
+let g:python_highlight_operators = 0
+let g:python_highlight_space_errors = 0
+let g:python_highlight_file_headers_as_comments = 1
 let g:vim_json_syntax_conceal = 1
 augroup vimrc
   " Set again
   autocmd FileType markdown setl conceallevel=2
-  autocmd FileType tex highlight clear Conceal
+  autocmd FileType tex      hi clear Conceal
 augroup END
 
 " More plugins...
+Plug 'Valloric/ListToggle'
 Plug 'airblade/vim-rooter'
 let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_silent_chdir = 1
@@ -201,7 +224,6 @@ xmap i, <Plug>(swap-textobject-i)
 Plug 'simnalamburt/vim-mundo'
 nnoremap <silent> <F2> :MundoToggle<CR>
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'milkypostman/vim-togglelist'
 Plug 'nacitar/a.vim'
 Plug 'nvie/vim-flake8'
 let g:flake8_quickfix_height = 7
@@ -209,6 +231,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-unimpaired'
+Plug 'tweekmonster/startuptime.vim'
 Plug 'vim-scripts/python_match.vim'
 Plug 'yous/PreserveNoEOL'
 if executable('cmake')
@@ -227,19 +250,20 @@ Plug 'arcticicestudio/nord-vim'
 let g:nord_italic = 0
 Plug 'junegunn/limelight.vim'
 nnoremap <silent> <F6> :Limelight!!<CR>
+hi def link pythonClassVar Structure
 if s:is_win
   let g:nord_comment_brightness = 20
 else
   " Poor approximation
-  autocmd vimrc ColorScheme nord highlight Comment ctermfg=102
   let g:limelight_conceal_ctermfg = 102
+  autocmd vimrc ColorScheme nord hi Comment ctermfg=102
 endif
 
 call plug#end()
 
 silent! colorscheme nord
-highlight clear SpellBad
-highlight SpellBad cterm=underline gui=underline
+hi clear SpellBad
+hi SpellBad cterm=underline gui=underline
 
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
@@ -253,12 +277,19 @@ if s:is_win
   set imdisable
   inoremap <silent> <C-[> <C-[>:set imdisable<CR>
   inoremap <silent> <Esc> <Esc>:set imdisable<CR>
-  nnoremap <silent> A :set noimdisable<CR>A
-  nnoremap <silent> I :set noimdisable<CR>I
-  nnoremap <silent> O :set noimdisable<CR>O
-  nnoremap <silent> a :set noimdisable<CR>a
+  nnoremap <silent> <C-[> <C-[>:set imdisable<CR>
+  nnoremap <silent> <Esc> <Esc>:set imdisable<CR>
   nnoremap <silent> i :set noimdisable<CR>i
+  nnoremap <silent> I :set noimdisable<CR>I
+  nnoremap <silent> a :set noimdisable<CR>a
+  nnoremap <silent> A :set noimdisable<CR>A
   nnoremap <silent> o :set noimdisable<CR>o
+  nnoremap <silent> O :set noimdisable<CR>O
+  nnoremap <silent> c :set noimdisable<CR>c
+  nnoremap <silent> C :set noimdisable<CR>C
+  nnoremap <silent> s :set noimdisable<CR>s
+  nnoremap <silent> S :set noimdisable<CR>S
+  nnoremap <silent> r :set noimdisable<CR>r
 endif
 
 " Some useful keymaps
@@ -270,7 +301,7 @@ nnoremap <Leader><Leader>1 :set ts=2<CR>
 nnoremap <Leader><Leader>2 :set ts=4<CR>
 nnoremap <Leader><Leader>3 :set ts=8<CR>
 nnoremap <Leader>a         :set paste<CR>i
-nnoremap <Leader>d         :set cc=81<CR>
+nnoremap <Leader>d         :let &cc = 81 - &cc<CR>:set cc?<CR>
 nnoremap <Leader>e         :set et! et?<CR>
 nnoremap <Leader>s         :set list! list?<CR>
 nnoremap <S-Tab>           <C-W>W

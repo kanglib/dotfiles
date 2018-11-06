@@ -37,3 +37,6 @@ to check the requirements.
 
     sudo apt install build-essential cmake python-dev python3-dev
     vim +PlugUpdate! +qa
+
+The post-update hooks do not work on Windows. You can use `update-ycm.bat` to
+update the build.
