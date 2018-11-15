@@ -97,13 +97,15 @@ let g:ycm_semantic_triggers = {
       \ 'ruby,rust':                  ['.', '::', 're![a-zA-Z_]+\w'],
       \ 'lua':                        ['.', ':', 're![a-zA-Z_]+\w'],
       \ }
-autocmd vimrc FileType *                          let g:ycm_auto_trigger = 0
-autocmd vimrc FileType c                          let g:ycm_auto_trigger = 1
-autocmd vimrc FileType cpp,cuda                   let g:ycm_auto_trigger = 1
-autocmd vimrc FileType php                        let g:ycm_auto_trigger = 1
-autocmd vimrc FileType cs,go,javascript,python,vb let g:ycm_auto_trigger = 1
-autocmd vimrc FileType ruby,rust                  let g:ycm_auto_trigger = 1
-autocmd vimrc FileType lua                        let g:ycm_auto_trigger = 1
+augroup vimrc
+  autocmd FileType *                          let g:ycm_auto_trigger = 0
+  autocmd FileType c                          let g:ycm_auto_trigger = 1
+  autocmd FileType cpp,cuda                   let g:ycm_auto_trigger = 1
+  autocmd FileType php                        let g:ycm_auto_trigger = 1
+  autocmd FileType cs,go,javascript,python,vb let g:ycm_auto_trigger = 1
+  autocmd FileType ruby,rust                  let g:ycm_auto_trigger = 1
+  autocmd FileType lua                        let g:ycm_auto_trigger = 1
+augroup END
 if !s:is_win
   Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 endif
@@ -274,22 +276,10 @@ command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 
 " Hangul IME
 if s:is_win
-  set imdisable
-  inoremap <silent> <C-[> <C-[>:set imdisable<CR>
-  inoremap <silent> <Esc> <Esc>:set imdisable<CR>
-  nnoremap <silent> <C-[> <C-[>:set imdisable<CR>
-  nnoremap <silent> <Esc> <Esc>:set imdisable<CR>
-  nnoremap <silent> i :set noimdisable<CR>i
-  nnoremap <silent> I :set noimdisable<CR>I
-  nnoremap <silent> a :set noimdisable<CR>a
-  nnoremap <silent> A :set noimdisable<CR>A
-  nnoremap <silent> o :set noimdisable<CR>o
-  nnoremap <silent> O :set noimdisable<CR>O
-  nnoremap <silent> c :set noimdisable<CR>c
-  nnoremap <silent> C :set noimdisable<CR>C
-  nnoremap <silent> s :set noimdisable<CR>s
-  nnoremap <silent> S :set noimdisable<CR>S
-  nnoremap <silent> r :set noimdisable<CR>r
+  augroup vimrc
+    autocmd InsertEnter * :set noimdisable
+    autocmd InsertLeave * :set imdisable
+  augroup END
 endif
 
 " Some useful keymaps

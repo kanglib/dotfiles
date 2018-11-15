@@ -16,7 +16,7 @@
 
 ## Installation
 
-    sudo apt-get install gdb tmux zsh unzip vim exuberant-ctags
+    sudo apt install gdb tmux zsh unzip vim exuberant-ctags
     ./install
     # (Re)start Zsh
 
