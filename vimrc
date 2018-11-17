@@ -236,7 +236,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tweekmonster/startuptime.vim'
 Plug 'vim-scripts/python_match.vim'
 Plug 'yous/PreserveNoEOL'
-if executable('cmake')
+if executable('ctags')
   Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
   nnoremap <silent> <F3> :TagbarToggle<CR>
 endif
