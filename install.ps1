@@ -12,7 +12,8 @@ function inst ($src, $dest) {
 }
 
 inst gitconfig ~\.gitconfig
-inst gitignore ~\.config\gitignore
+md -Force ~\.config\git >$null
+inst gitignore ~\.config\git\ignore
 ni -Force ~\.config\gitconfig.local >$null
 
 inst pythonrc ~\.config\pythonrc

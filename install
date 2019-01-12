@@ -19,10 +19,11 @@ pull() {
 
 info gitconfig
 inst gitconfig ~/.gitconfig
-inst gitignore ~/.config/gitignore
+mkdir -p ~/.config/git
+inst gitignore ~/.config/git/ignore
 curl -fsLo ~/.local/bin/diff-so-fancy git.io/vpxB1
 chmod +x ~/.local/bin/diff-so-fancy
-inst gitconfig.nix ~/.config/gitconfig.local
+inst gitconfig.unix ~/.config/gitconfig.local
 
 info cheat.sh
 curl -fso ~/.local/bin/cht.sh https://cht.sh/:cht.sh

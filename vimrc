@@ -42,12 +42,16 @@ set linebreak
 set mouse=a
 set nobackup noundofile
 set nofoldenable
+set noshelltemp
 set number
 set regexpengine=1
 set shortmess+=a
 set showcmd
+set splitbelow
+set splitright
 set sw=4 sts=-1 et
 set title
+set updatetime=100
 inoremap <C-U> <C-G>u<C-U>
 map Y y$
 augroup vimrc
@@ -97,6 +101,7 @@ let g:ycm_semantic_triggers = {
       \ 'ruby,rust':                  ['.', '::', 're![a-zA-Z_]+\w'],
       \ 'lua':                        ['.', ':', 're![a-zA-Z_]+\w'],
       \ }
+nnoremap <silent> <F7> :YcmRestartServer<CR>
 augroup vimrc
   autocmd FileType *                          let g:ycm_auto_trigger = 0
   autocmd FileType c                          let g:ycm_auto_trigger = 1
@@ -176,15 +181,18 @@ set noshowmode
 set ttimeoutlen=10
 
 " Git support
+Plug 'mhinz/vim-signify'
+let g:signify_cursorhold_insert = 0
+let g:signify_cursorhold_normal = 0
+let g:signify_realtime = 1
+let g:signify_update_on_bufenter = 0
+let g:signify_vcs_list = ['git']
+set signcolumn=yes
+omap ac <plug>(signify-motion-outer-pending)
+omap ic <plug>(signify-motion-inner-pending)
+xmap ac <plug>(signify-motion-outer-visual)
+xmap ic <plug>(signify-motion-inner-visual)
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-let g:gitgutter_async = 0
-set updatetime=250
-if exists('&signcolumn')
-  set signcolumn=yes
-else
-  let g:gitgutter_sign_column_always = 1
-endif
 
 " Language support
 let g:python_highlight_all = 0
