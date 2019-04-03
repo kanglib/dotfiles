@@ -30,7 +30,6 @@ set display=uhex
 let c_comment_strings = 1
 let c_gnu = 1
 let mapleader = ','
-set belloff=all
 set cinoptions=:0g0N-s(0
 set conceallevel=2
 set cursorline
@@ -42,7 +41,6 @@ set linebreak
 set mouse=a
 set nobackup noundofile
 set nofoldenable
-set noshelltemp
 set number
 set regexpengine=1
 set shortmess+=a
@@ -52,6 +50,9 @@ set splitright
 set sw=4 sts=-1 et
 set title
 set updatetime=100
+if exists('&belloff')
+  set belloff=all
+endif
 inoremap <C-U> <C-G>u<C-U>
 map Y y$
 augroup vimrc
@@ -94,22 +95,20 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.config/ycm_extra_conf.py'
 let g:ycm_max_num_candidates = 10
 let g:ycm_semantic_triggers = {
-      \ 'c':                          ['->', '.', 're![a-zA-Z_]+\w'],
-      \ 'cpp,cuda':                   ['->', '.', '::', 're![a-zA-Z_]+\w'],
-      \ 'php':                        ['->', '::', 're![a-zA-Z_]+\w'],
-      \ 'cs,go,javascript,python,vb': ['.', 're![a-zA-Z_]+\w'],
-      \ 'ruby,rust':                  ['.', '::', 're![a-zA-Z_]+\w'],
-      \ 'lua':                        ['.', ':', 're![a-zA-Z_]+\w'],
+      \ 'c':            ['->', '.', 're![a-zA-Z_]+\w'],
+      \ 'cpp,cuda':     ['->', '.', '::', 're![a-zA-Z_]+\w'],
+      \ 'cs,python,vb': ['.', 're![a-zA-Z_]+\w'],
+      \ 'ruby,rust':    ['.', '::', 're![a-zA-Z_]+\w'],
+      \ 'lua':          ['.', ':', 're![a-zA-Z_]+\w'],
       \ }
 nnoremap <silent> <F7> :YcmRestartServer<CR>
 augroup vimrc
-  autocmd FileType *                          let g:ycm_auto_trigger = 0
-  autocmd FileType c                          let g:ycm_auto_trigger = 1
-  autocmd FileType cpp,cuda                   let g:ycm_auto_trigger = 1
-  autocmd FileType php                        let g:ycm_auto_trigger = 1
-  autocmd FileType cs,go,javascript,python,vb let g:ycm_auto_trigger = 1
-  autocmd FileType ruby,rust                  let g:ycm_auto_trigger = 1
-  autocmd FileType lua                        let g:ycm_auto_trigger = 1
+  autocmd FileType *            let g:ycm_auto_trigger = 0
+  autocmd FileType c            let g:ycm_auto_trigger = 1
+  autocmd FileType cpp,cuda     let g:ycm_auto_trigger = 1
+  autocmd FileType cs,python,vb let g:ycm_auto_trigger = 1
+  autocmd FileType ruby,rust    let g:ycm_auto_trigger = 1
+  autocmd FileType lua          let g:ycm_auto_trigger = 1
 augroup END
 if !s:is_win
   Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
@@ -174,6 +173,7 @@ let g:airline_theme = 'light'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
+let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.notexists = '*'
 set linespace=0
 set noshowmode
@@ -186,7 +186,9 @@ let g:signify_cursorhold_normal = 0
 let g:signify_realtime = 1
 let g:signify_update_on_bufenter = 0
 let g:signify_vcs_list = ['git']
-set signcolumn=yes
+if exists('&signcolumn')
+  set signcolumn=yes
+endif
 omap ac <plug>(signify-motion-outer-pending)
 omap ic <plug>(signify-motion-inner-pending)
 xmap ac <plug>(signify-motion-outer-visual)
@@ -209,12 +211,28 @@ augroup vimrc
   autocmd FileType markdown setl conceallevel=2
   autocmd FileType tex      hi clear Conceal
 augroup END
+Plug 'mattn/emmet-vim'
+let g:user_emmet_leader_key = '<C-G>'
+Plug 'nvie/vim-flake8'
+let g:flake8_quickfix_height = 7
+Plug 'vim-scripts/python_match.vim'
 
 " More plugins...
 Plug 'Valloric/ListToggle'
+Plug 'calebsmith/vim-lambdify'
+Plug 'dkarter/bullets.vim'
+Plug 'junegunn/vim-peekaboo'
+Plug 'nacitar/a.vim'
+Plug 'rstacruz/vim-closer'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-sleuth'
+Plug 'tweekmonster/startuptime.vim'
+Plug 'yous/PreserveNoEOL'
 Plug 'airblade/vim-rooter'
-let g:rooter_change_directory_for_non_project_files = 'current'
 let g:rooter_silent_chdir = 1
+Plug 'fidian/hexmode'
+let g:hexmode_xxd_options = '-g 1 -u'
 Plug 'junegunn/vim-easy-align'
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
@@ -233,26 +251,15 @@ xmap a, <Plug>(swap-textobject-a)
 xmap i, <Plug>(swap-textobject-i)
 Plug 'simnalamburt/vim-mundo'
 nnoremap <silent> <F2> :MundoToggle<CR>
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'nacitar/a.vim'
-Plug 'nvie/vim-flake8'
-let g:flake8_quickfix_height = 7
-Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-unimpaired'
-Plug 'tweekmonster/startuptime.vim'
-Plug 'vim-scripts/python_match.vim'
-Plug 'yous/PreserveNoEOL'
+if v:version >= 800
+  Plug 'johngrib/vim-game-code-break'
+  Plug 'ludovicchabant/vim-gutentags'
+else
+  Plug 'ludovicchabant/vim-gutentags', {'branch': 'vim7'}
+endif
 if executable('ctags')
   Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
   nnoremap <silent> <F3> :TagbarToggle<CR>
-endif
-
-" Honey jam
-Plug 'calebsmith/vim-lambdify'
-if v:version >= 800
-  Plug 'johngrib/vim-game-code-break'
 endif
 
 " Color scheme
@@ -289,6 +296,16 @@ if s:is_win
     autocmd InsertLeave * :set imdisable
   augroup END
 endif
+
+inoremap <Up>    <Nop>
+noremap  <Up>    <Nop>
+inoremap <Down>  <Nop>
+noremap  <Down>  <Nop>
+inoremap <Left>  <Nop>
+inoremap <Right> <Nop>
+noremap  <Left>  <Nop>
+noremap  <Right> <Nop>
+" Ⓑ Ⓐ
 
 " Some useful keymaps
 nnoremap <F4>              :%s/\s\+$//e<CR><C-L>
