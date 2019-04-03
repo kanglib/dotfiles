@@ -33,9 +33,6 @@ info pythonrc
 inst pythonrc ~/.config/pythonrc
 mkdir -p ~/.config/pip
 inst pip.conf ~/.config/pip/pip.conf
-export PYENV_ROOT=~/.local/share/pyenv
-curl -fsL git.io/install-pyenv | bash
-[[ $(command -v pyenv) ]] && pyenv update
 
 if [[ $(command -v gdb) ]]; then
     info gdbinit
@@ -49,6 +46,18 @@ if [[ $(command -v tmux) ]]; then
     inst tmux.conf ~/.tmux.conf
     ~/.tmux/plugins/tpm/bin/install_plugins
     ~/.tmux/plugins/tpm/bin/update_plugins all
+fi
+
+if [[ $(command -v vim) ]]; then
+    info vimrc
+    curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
+    inst vimrc ~/.vimrc
+    inst ycm_extra_conf.py ~/.config/ycm_extra_conf.py
+    vim +PlugClean! +PlugUpdate +qa
+
+    # fzf
+    curl -fsLo ~/.local/bin/fshow git.io/vpxBg
+    chmod +x ~/.local/bin/fshow
 fi
 
 if [[ $(command -v zsh) ]]; then
@@ -68,18 +77,6 @@ if [[ $(command -v zsh) ]]; then
         unzip "$TMPDIR"/exa.zip -d ~/.local/bin >/dev/null
         mv -f ~/.local/bin/exa-* ~/.local/bin/exa
     fi
-fi
-
-if [[ $(command -v vim) ]]; then
-    info vimrc
-    curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
-    inst vimrc ~/.vimrc
-    inst ycm_extra_conf.py ~/.config/ycm_extra_conf.py
-    vim +PlugClean! +PlugUpdate +qa
-
-    # fzf
-    curl -fsLo ~/.local/bin/fshow git.io/vpxBg
-    chmod +x ~/.local/bin/fshow
 fi
 
 printf "\e[1;36mDone!\e[m\n"

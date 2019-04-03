@@ -6,7 +6,6 @@ robbyrussell/oh-my-zsh path:plugins/common-aliases
 robbyrussell/oh-my-zsh path:plugins/extract
 robbyrussell/oh-my-zsh path:plugins/fancy-ctrl-z
 robbyrussell/oh-my-zsh path:plugins/ssh-agent
-robbyrussell/oh-my-zsh path:plugins/tig
 robbyrussell/oh-my-zsh path:plugins/ubuntu
 
 caarlos0/zsh-mkc

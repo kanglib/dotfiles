@@ -1,16 +1,16 @@
 autoload -U is-at-least
 
-setopt extendedglob globdots
-stty start undef
-stty stop  undef
+setopt extendedglob globdots nobgnice
+umask 027
+
+stty -ixon
 bindkey -e
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
+bindkey -s "^S" "^Asudo ^E"
 
 PURE_CMD_MAX_EXEC_TIME=1
 source ~/.config/zsh_plugins.sh
-bindkey "\e[A" history-substring-search-up
-bindkey "\e[B" history-substring-search-down
 
 unalias ag 2>/dev/null
 unalias fd 2>/dev/null
@@ -37,6 +37,17 @@ alias lr="l -R"
 alias lar="la -R"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export KEYTIMEOUT=1
+export PYTHONSTARTUP=~/.config/pythonrc
+
+if [[ $(command -v ag) ]]; then
+    export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -l"
+fi
+
+if [[ $(command -v vim) ]]; then
+    export VISUAL=vim
+fi
 
 # Should be at last
 if [[ $(command -v tmux) && ! $TMUX ]]; then

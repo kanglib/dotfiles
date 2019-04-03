@@ -1,10 +1,8 @@
-[credential]
-	helper = cache
-	username = kanglib
 [user]
-	name = Hyeonwoo Kang
 	email = kanglib14@gmail.com
+	name = Hyeonwoo Kang
 [core]
+	ignoreCase = true
 	quotePath = false
 [diff]
 	compactionHeuristic = true
