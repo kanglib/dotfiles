@@ -174,7 +174,6 @@ let g:airline_theme = 'light'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.notexists = '*'
 set linespace=0
 set noshowmode
@@ -197,7 +196,7 @@ Plug 'tpope/vim-fugitive'
 " Language support
 let g:python_highlight_all = 0
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['javascript', 'markdown']
+let g:polyglot_disabled = ['markdown']
 " Too much
 let g:python_highlight_builtins = 0
 let g:python_highlight_exceptions = 0
@@ -210,9 +209,6 @@ augroup vimrc
   autocmd FileType markdown setl conceallevel=2
   autocmd FileType tex      hi clear Conceal
 augroup END
-Plug 'othree/javascript-libraries-syntax.vim'
-let g:used_javascript_libs = 'jquery'
-Plug 'othree/yajs.vim'
 
 " More plugins...
 Plug 'Valloric/ListToggle'
