@@ -1,7 +1,7 @@
 autoload -U is-at-least
 
 setopt extendedglob globdots nobgnice
-umask 027
+umask 022
 
 stty -ixon
 bindkey -e
@@ -51,5 +51,6 @@ fi
 
 # Should be at last
 if [[ $(command -v tmux) && ! $TMUX ]]; then
+    cd
     tmux -2 new -As 0
 fi
