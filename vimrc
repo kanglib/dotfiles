@@ -102,7 +102,7 @@ let g:ycm_semantic_triggers = {
       \ 'lua':          ['.', ':', 're![a-zA-Z_]+\w'],
       \ }
 nnoremap <silent> <F7> :YcmRestartServer<CR>
-augroup vimrc
+augroup ycm
   autocmd FileType *            let g:ycm_auto_trigger = 0
   autocmd FileType c            let g:ycm_auto_trigger = 1
   autocmd FileType cpp,cuda     let g:ycm_auto_trigger = 1
@@ -131,7 +131,7 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit',
       \ }
 let g:fzf_layout = {'down': '~20%'}
-augroup vimrc
+augroup fzf
   autocmd! FileType fzf
   autocmd  FileType fzf set laststatus=0 |
         \ autocmd BufLeave <buffer> set laststatus=2
@@ -206,7 +206,7 @@ let g:python_highlight_operators = 0
 let g:python_highlight_space_errors = 0
 let g:python_highlight_file_headers_as_comments = 1
 let g:vim_json_syntax_conceal = 1
-augroup vimrc
+augroup conceal
   " Set again
   autocmd FileType markdown setl conceallevel=2
   autocmd FileType tex      hi clear Conceal
@@ -291,7 +291,7 @@ command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 
 " Hangul IME
 if s:is_win
-  augroup vimrc
+  augroup win_ime
     autocmd InsertEnter * :set noimdisable
     autocmd InsertLeave * :set imdisable
   augroup END
@@ -325,7 +325,7 @@ noremap  gV                `[v`]
 autocmd vimrc InsertLeave * set nopaste
 
 " Press F5 to run
-augroup vimrc
+augroup f5_run
   if s:is_win
     autocmd FileType c        nnoremap <Plug>(run)
           \ :silent !clang -o %:r.exe % & %:r & pause<CR>
