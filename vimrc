@@ -223,8 +223,6 @@ Plug 'calebsmith/vim-lambdify'
 Plug 'dkarter/bullets.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'nacitar/a.vim'
-Plug 'rstacruz/vim-closer'
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-sleuth'
 Plug 'tweekmonster/startuptime.vim'
@@ -251,6 +249,14 @@ xmap a, <Plug>(swap-textobject-a)
 xmap i, <Plug>(swap-textobject-i)
 Plug 'simnalamburt/vim-mundo'
 nnoremap <silent> <F2> :MundoToggle<CR>
+Plug 'tmsvg/pear-tree'
+let g:pear_tree_smart_backspace = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_openers = 1
+Plug 'tpope/vim-commentary'
+augroup commentary
+  autocmd FileType c,cpp setl commentstring=//\ %s
+augroup END
 if v:version >= 800
   Plug 'johngrib/vim-game-code-break'
   Plug 'ludovicchabant/vim-gutentags'
