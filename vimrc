@@ -92,7 +92,7 @@ endif
 let g:ycm_always_populate_location_list = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.config/ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_max_num_candidates = 10
 let g:ycm_semantic_triggers = {
       \ 'c':            ['->', '.', 're![a-zA-Z_]+\w'],

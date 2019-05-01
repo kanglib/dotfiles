@@ -9,8 +9,14 @@ info() {
 }
 
 inst() {
-    [[ -f $2 ]] && mv -f $2 $2.bak
-    ln -sf ~+/$1 $2
+    if [[ -e $2 ]]; then
+        if [[ -h $2 ]]; then
+            rm -f $2
+        else
+            mv -f $2 $2.bak
+        fi
+    fi
+    ln -s ~+/$1 $2
 }
 
 pull() {
@@ -18,9 +24,7 @@ pull() {
 }
 
 info gitconfig
-inst gitconfig ~/.gitconfig
-mkdir -p ~/.config/git
-inst gitignore ~/.config/git/ignore
+inst git ~/.config/git
 curl -fsLo ~/.local/bin/diff-so-fancy git.io/vpxB1
 chmod +x ~/.local/bin/diff-so-fancy
 inst gitconfig.unix ~/.config/gitconfig.local
@@ -31,12 +35,17 @@ chmod +x ~/.local/bin/cht.sh
 
 info pythonrc
 inst pythonrc ~/.config/pythonrc
-mkdir -p ~/.config/pip
-inst pip.conf ~/.config/pip/pip.conf
+inst pip ~/.config/pip
 
 if [[ $(command -v gdb) ]]; then
     info gdbinit
-    [[ -f ~/.gdbinit ]] && mv -f ~/.gdbinit ~/.gdbinit.bak
+    if [[ -e ~/.gdbinit ]]; then
+        if [[ -h ~/.gdbinit ]]; then
+            rm -f ~/.gdbinit
+        else
+            mv -f ~/.gdbinit ~/.gdbinit.bak
+        fi
+    fi
     curl -fsLo ~/.gdbinit git.io/.gdbinit
 fi
 
@@ -50,9 +59,9 @@ fi
 
 if [[ $(command -v vim) ]]; then
     info vimrc
-    curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
     inst vimrc ~/.vimrc
-    inst ycm_extra_conf.py ~/.config/ycm_extra_conf.py
+    inst ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
+    curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
     vim +PlugClean! +PlugUpdate +qa
 
     # fzf
