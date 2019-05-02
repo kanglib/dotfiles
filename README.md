@@ -2,12 +2,12 @@
 [@kanglib](https://github.com/kanglib) does dotfiles
 
 ## Supported systems
-* Ubuntu 14.04+ via PuTTY
+* Ubuntu 14.04+ via PuTTY (WSL is OK)
 * Windows 10 x64 with [GVim](https://bintray.com/micbou/generic/vim)
 
 ## Requirements
 * Vim 7.4+
-* [Nord color theme](https://github.com/arcticicestudio/nord#port-projects)
+* Tomorrow Night theme [base16 version](https://github.com/chriskempson/base16#scheme-repositories)
 * [Exuberant Ctags](http://ctags.sourceforge.net/)
 * [Python](https://www.python.org/downloads/) (3.6 recommended)
 * [D2Coding](https://github.com/naver/d2codingfont/releases/latest) 1.3+

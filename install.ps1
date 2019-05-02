@@ -7,19 +7,20 @@ setx HOME "$env:USERPROFILE"
 function inst ($src, $dest) {
     if (Test-Path $dest) {
         if (gi -ea SilentlyContinue $dest | ?{$_.LinkType}) {
-            rm -Force $dest >$null
+            (gi $dest).Delete() >$null
         } else {
-            mv -f $dest "$dest.bak" >$null
+            mv -Force $dest "$dest.bak" >$null
         }
     }
-    ni -ItemType SymbolicLink $dest -Value $src >$null
+    ni -it SymbolicLink $dest -Value $src >$null
 }
 
 inst git ~\.config\git
 ni -ea SilentlyContinue ~\.config\gitconfig.local >$null
 
 inst pythonrc ~\.config\pythonrc
-inst pip ~\.config\pip
+md -f ~\pip >$null
+inst pip\pip.conf ~\pip\pip.ini
 setx PYTHONSTARTUP $env:HOME\.config\pythonrc
 
 if (gcm -ea SilentlyContinue gvim) {

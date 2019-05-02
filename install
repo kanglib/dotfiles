@@ -5,7 +5,7 @@ mkdir -p ~/.config
 mkdir -p ~/.local/bin
 
 info() {
-    printf "\e[1;36mInstalling %s...\e[m\n" $1
+    printf "\e[1;34mInstalling %s ...\e[m\n" $1
 }
 
 inst() {
@@ -51,10 +51,15 @@ fi
 
 if [[ $(command -v tmux) ]]; then
     info tmux.conf
-    pull https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    mkdir -p ~/.tmux
     inst tmux.conf ~/.tmux.conf
-    ~/.tmux/plugins/tpm/bin/install_plugins
-    ~/.tmux/plugins/tpm/bin/update_plugins all
+    inst tmux-powerlinerc ~/.tmux-powerlinerc
+    inst tmux/segments ~/.tmux/segments
+    inst tmux/themes ~/.tmux/themes
+    pull https://github.com/erikw/tmux-powerline ~/.tmux/tmux-powerline
+    pull https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    printf "\e[1;36mSee https://github.com/tmux-plugins/tpm#key-bindings to"
+    printf " complete the installation.\e[m\n" $1
 fi
 
 if [[ $(command -v vim) ]]; then
@@ -75,7 +80,6 @@ if [[ $(command -v zsh) ]]; then
     curl -fsL git.io/vb6iL | sh
     zsh -c "antibody bundle < zsh_plugins.txt" &>/dev/null || true
     zsh -c "antibody bundle < zsh_plugins.txt" >~/.config/zsh_plugins.sh
-    curl -fsLo ~/.dircolors git.io/vpOBP
     inst zshrc ~/.zshrc
 
     if [[ $(uname -m) == x86_64 ]]; then

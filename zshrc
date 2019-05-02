@@ -22,12 +22,12 @@ alias latexmk="latexmk -pdf -interaction=nonstopmode -halt-on-error"
 alias pk="pkill -9 -t"
 
 if [[ $(command -v exa) ]]; then
-    alias l="LANG=C.UTF-8 exa --git  --time-style=long-iso -l"
+    alias l="LANG=C.UTF-8 exa --time-style=long-iso -l"
     alias la="l -a"
     alias lt="l -smod"
     alias lat="l -asmod"
 else
-    alias l="LANG=C.UTF-8 ls --color --time-style=long-iso -lh"
+    alias l="LANG=C.UTF-8 ls  --time-style=long-iso -lh --color"
     alias la="l -A"
     alias lt="l -tr"
     alias lat="l -Atr"

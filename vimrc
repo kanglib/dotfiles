@@ -269,22 +269,15 @@ if executable('ctags')
 endif
 
 " Color scheme
-Plug 'arcticicestudio/nord-vim'
-let g:nord_italic = 0
+Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
+set t_Co=256
+hi def link pythonClassVar Structure
 Plug 'junegunn/limelight.vim'
 nnoremap <silent> <F6> :Limelight!!<CR>
-hi def link pythonClassVar Structure
-if s:is_win
-  let g:nord_comment_brightness = 20
-else
-  " Poor approximation
-  let g:limelight_conceal_ctermfg = 102
-  autocmd vimrc ColorScheme nord hi Comment ctermfg=102
-endif
 
 call plug#end()
 
-silent! colorscheme nord
+silent! colorscheme Tomorrow-Night
 hi clear SpellBad
 hi SpellBad cterm=underline gui=underline
 
