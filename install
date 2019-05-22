@@ -51,9 +51,9 @@ fi
 
 if [[ $(command -v tmux) ]]; then
     info tmux.conf
-    mkdir -p ~/.tmux
     inst tmux.conf ~/.tmux.conf
     inst tmux-powerlinerc ~/.tmux-powerlinerc
+    mkdir -p ~/.tmux
     inst tmux/segments ~/.tmux/segments
     inst tmux/themes ~/.tmux/themes
     pull https://github.com/erikw/tmux-powerline ~/.tmux/tmux-powerline
@@ -65,8 +65,8 @@ fi
 if [[ $(command -v vim) ]]; then
     info vimrc
     inst vimrc ~/.vimrc
-    inst ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
     curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
+    inst ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
     vim +PlugClean! +PlugUpdate +qa
 
     # fzf

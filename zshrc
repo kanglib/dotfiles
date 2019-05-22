@@ -21,6 +21,13 @@ alias gdb="gdb -q"
 alias latexmk="latexmk -pdf -interaction=nonstopmode -halt-on-error"
 alias pk="pkill -9 -t"
 
+if [[ $(command -v bat) ]]; then
+    alias cat=bat
+    alias preview="fzf --preview='bat --color always {}'"
+else
+    alias preview="fzf --preview='cat {}'"
+fi
+
 if [[ $(command -v exa) ]]; then
     alias l="LANG=C.UTF-8 exa --time-style=long-iso -l"
     alias la="l -a"
@@ -43,6 +50,10 @@ export PYTHONSTARTUP=~/.config/pythonrc
 
 if [[ $(command -v ag) ]]; then
     export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -l"
+fi
+
+if [[ $(command -v thefuck) ]]; then
+    eval $(thefuck --alias f)
 fi
 
 if [[ $(command -v vim) ]]; then
