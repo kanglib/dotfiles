@@ -138,7 +138,7 @@ augroup fzf
 augroup END
 Plug 'junegunn/fzf.vim'
 nnoremap <silent> <C-P> :Files<CR>
-nnoremap <silent> <Leader>f :execute 'Ag ' . expand('<cword>')<CR>
+nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
 command! -bang -nargs=* GGrep
       \ call fzf#vim#grep(
       \   'git grep --line-number '.shellescape(<q-args>), 0,
@@ -285,8 +285,8 @@ set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
-command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-      \ | wincmd p | diffthis
+command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+      \ | diffthis | wincmd p | diffthis
 
 " Hangul IME
 if s:is_win

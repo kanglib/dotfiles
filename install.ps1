@@ -37,7 +37,7 @@ if (gcm -ea SilentlyContinue gvim) {
     curl $pattern.Match($json).Value -OutFile $temp
     Expand-Archive -f -Path $temp -DestinationPath ~\.local\share\fzf\bin
 
-    if (gcm -ea SilentlyContinue ag) {
-        setx FZF_DEFAULT_COMMAND "ag --hidden --ignore .git -l"
+    if (gcm -ea SilentlyContinue rg) {
+        setx FZF_DEFAULT_COMMAND "rg --files --hidden -g '!.git'"
     }
 }

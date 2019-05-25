@@ -13,8 +13,6 @@ PURE_CMD_MAX_EXEC_TIME=1
 source ~/.config/zsh_plugins.sh
 
 unalias ag 2>/dev/null
-unalias fd 2>/dev/null
-unalias ff 2>/dev/null
 alias -g ...=../..
 alias -g ....=../../..
 alias gdb="gdb -q"
@@ -48,8 +46,9 @@ alias lar="la -R"
 export KEYTIMEOUT=1
 export PYTHONSTARTUP=~/.config/pythonrc
 
-if [[ $(command -v ag) ]]; then
-    export FZF_DEFAULT_COMMAND="ag --hidden --ignore .git -l"
+if [[ $(command -v rg) ]]; then
+    export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git'"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
 if [[ $(command -v thefuck) ]]; then
