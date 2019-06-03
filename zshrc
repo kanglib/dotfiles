@@ -19,14 +19,14 @@ alias gdb="gdb -q"
 alias latexmk="latexmk -pdf -interaction=nonstopmode -halt-on-error"
 alias pk="pkill -9 -t"
 
-if [[ $(command -v bat) ]]; then
+if [[ -n $(command -v bat) ]]; then
     alias cat=bat
     alias preview="fzf --preview='bat --color always {}'"
 else
     alias preview="fzf --preview='cat {}'"
 fi
 
-if [[ $(command -v exa) ]]; then
+if [[ -n $(command -v exa) ]]; then
     alias l="LANG=C.UTF-8 exa --time-style=long-iso -l"
     alias la="l -a"
     alias lt="l -smod"
@@ -46,21 +46,21 @@ alias lar="la -R"
 export KEYTIMEOUT=1
 export PYTHONSTARTUP=~/.config/pythonrc
 
-if [[ $(command -v rg) ]]; then
+if [[ -n $(command -v rg) ]]; then
     export FZF_DEFAULT_COMMAND="rg --files --hidden -g '!.git'"
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
-if [[ $(command -v thefuck) ]]; then
+if [[ -n $(command -v thefuck) ]]; then
     eval $(thefuck --alias f)
 fi
 
-if [[ $(command -v vim) ]]; then
+if [[ -n $(command -v vim) ]]; then
     export VISUAL=vim
 fi
 
 # Should be at last
-if [[ $(command -v tmux) && ! $TMUX ]]; then
+if [[ -n $(command -v tmux) && -z $TMUX ]]; then
     cd
     tmux -2 new -As 0
 fi

@@ -285,7 +285,7 @@ set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
-command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
       \ | diffthis | wincmd p | diffthis
 
 " Hangul IME

@@ -37,7 +37,7 @@ info pythonrc
 inst pythonrc ~/.config/pythonrc
 inst pip ~/.config/pip
 
-if [[ $(command -v gdb) ]]; then
+if [[ -n $(command -v gdb) ]]; then
     info gdbinit
     if [[ -e ~/.gdbinit ]]; then
         if [[ -h ~/.gdbinit ]]; then
@@ -49,7 +49,7 @@ if [[ $(command -v gdb) ]]; then
     curl -fsLo ~/.gdbinit git.io/.gdbinit
 fi
 
-if [[ $(command -v tmux) ]]; then
+if [[ -n $(command -v tmux) ]]; then
     info tmux.conf
     inst tmux.conf ~/.tmux.conf
     inst tmux-powerlinerc ~/.tmux-powerlinerc
@@ -62,7 +62,7 @@ if [[ $(command -v tmux) ]]; then
     printf " complete the installation.\e[m\n" $1
 fi
 
-if [[ $(command -v vim) ]]; then
+if [[ -n $(command -v vim) ]]; then
     info vimrc
     inst vimrc ~/.vimrc
     curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
@@ -74,7 +74,7 @@ if [[ $(command -v vim) ]]; then
     chmod +x ~/.local/bin/fshow
 fi
 
-if [[ $(command -v zsh) ]]; then
+if [[ -n $(command -v zsh) ]]; then
     info zshrc
     inst zshenv ~/.zshenv
     curl -fsL git.io/vb6iL | sh
