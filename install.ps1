@@ -38,6 +38,6 @@ if (gcm -ea SilentlyContinue gvim) {
     Expand-Archive -f -Path $temp -DestinationPath ~\.local\share\fzf\bin
 
     if (gcm -ea SilentlyContinue rg) {
-        setx FZF_DEFAULT_COMMAND "rg --files --hidden -g '!.git'"
+        setx FZF_DEFAULT_COMMAND 'rg --files --hidden -g "!.git"'
     }
 }

@@ -66,6 +66,7 @@ if s:is_win
   set directory=$TEMP
   set guifont=D2Coding:h10
   set guioptions=c
+  set renderoptions=type:directx
   set shell=cmd.exe
 else
   set directory=/tmp
