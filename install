@@ -77,7 +77,7 @@ fi
 if [[ -n $(command -v zsh) ]]; then
     info zshrc
     inst zshenv ~/.zshenv
-    curl -fsL git.io/vb6iL | sh
+    curl -fsL git.io/antibody | sh -s -- -b ~/.local/bin
     zsh -c "antibody bundle < zsh_plugins.txt" &>/dev/null || true
     zsh -c "antibody bundle < zsh_plugins.txt" >~/.config/zsh_plugins.sh
     inst zshrc ~/.zshrc
