@@ -1,6 +1,7 @@
 " vim: sw=2 sts=-1 et
 
-set nocompatible
+" VIM 8 ONLY
+source $VIMRUNTIME/defaults.vim
 let s:is_win = has('win16') || has('win32') || has('win64')
 
 " Windows-Unix compatibility
@@ -21,38 +22,31 @@ call plug#begin('~/.vim/plugged')
 
 " Not so sensible ;-)
 set encoding=utf-8
-set scrolloff=5
 set viminfo=
 Plug 'tpope/vim-sensible'
 set display=uhex
 
 " More basic settings
-let c_comment_strings = 1
 let c_gnu = 1
 let mapleader = ','
+set belloff=all
 set cinoptions=:0g0N-s(0
 set conceallevel=2
 set cursorline
-set exrc
 set fileencodings=ucs-bom,utf-8,cp949,latin1
 set hlsearch
 set ignorecase smartcase
 set linebreak
 set mouse=a
-set nobackup noundofile
 set nofoldenable
 set number
 set regexpengine=1
 set shortmess+=a
-set showcmd
-set splitbelow
+set shortmess-=S
 set splitright
 set sw=4 sts=-1 et
 set title
 set updatetime=100
-if exists('&belloff')
-  set belloff=all
-endif
 inoremap <C-U> <C-G>u<C-U>
 map Y y$
 augroup vimrc
@@ -61,7 +55,6 @@ augroup vimrc
   autocmd FileType markdown,tex,text setl spell textwidth=80
 augroup END
 if s:is_win
-  set clipboard=unnamed
   set columns=132 lines=43
   set directory=$TEMP
   set guifont=D2Coding:h10
@@ -74,21 +67,17 @@ endif
 
 " YouCompleteMe
 if executable('cmake')
-  if v:version > 704 || v:version == 704 && has('patch1578')
-    if has('python') || has('python3')
-      function! BuildYCM(info)
-        if a:info.status != 'unchanged' || a:info.force
-          if s:is_win
-            silent !py install.py --clang-completer
-          else
-            execute 'silent !./install.py --clang-completer'
-          endif
-          redraw!
-        endif
-      endfunction
-      Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
+  function! BuildYCM(info)
+    if a:info.status != 'unchanged' || a:info.force
+      if s:is_win
+        silent !py install.py --clang-completer
+      else
+        execute 'silent !./install.py --clang-completer'
+      endif
+      redraw!
     endif
-  endif
+  endfunction
+  Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
 endif
 let g:ycm_always_populate_location_list = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -99,8 +88,8 @@ let g:ycm_semantic_triggers = {
       \ 'c':            ['->', '.', 're![a-zA-Z_]+\w'],
       \ 'cpp,cuda':     ['->', '.', '::', 're![a-zA-Z_]+\w'],
       \ 'cs,python,vb': ['.', 're![a-zA-Z_]+\w'],
-      \ 'ruby,rust':    ['.', '::', 're![a-zA-Z_]+\w'],
       \ 'lua':          ['.', ':', 're![a-zA-Z_]+\w'],
+      \ 'ruby,rust':    ['.', '::', 're![a-zA-Z_]+\w'],
       \ }
 nnoremap <silent> <F7> :YcmRestartServer<CR>
 augroup ycm
@@ -108,77 +97,27 @@ augroup ycm
   autocmd FileType c            let g:ycm_auto_trigger = 1
   autocmd FileType cpp,cuda     let g:ycm_auto_trigger = 1
   autocmd FileType cs,python,vb let g:ycm_auto_trigger = 1
-  autocmd FileType ruby,rust    let g:ycm_auto_trigger = 1
   autocmd FileType lua          let g:ycm_auto_trigger = 1
+  autocmd FileType ruby,rust    let g:ycm_auto_trigger = 1
 augroup END
 if !s:is_win
   Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
 endif
 
 " UltiSnips
-if has('python') || has('python3')
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
-  let g:UltiSnipsExpandTrigger = '<C-F>'
-endif
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger = '<C-F>'
 
-" fzf
-Plug 'junegunn/fzf', {
-      \ 'dir': '~/.local/share/fzf',
-      \ 'do': './install --all --no-bash --no-fish',
-      \ }
-let g:fzf_action = {
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit',
-      \ }
-let g:fzf_layout = {'down': '~20%'}
-augroup fzf
-  autocmd! FileType fzf
-  autocmd  FileType fzf set laststatus=0 |
-        \ autocmd BufLeave <buffer> set laststatus=2
-augroup END
-Plug 'junegunn/fzf.vim'
-nnoremap <silent> <C-P> :Files<CR>
-nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
-command! -bang -nargs=* GGrep
-      \ call fzf#vim#grep(
-      \   'git grep --line-number '.shellescape(<q-args>), 0,
-      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-imap <C-X><C-F> <Plug>(fzf-complete-path)
-
-" Search enhancement
-Plug 'osyo-manga/vim-anzu'
-set statusline=%{anzu#search_status()}
-let g:anzu_status_format = ' %p (%i/%l) %#WarningMsg#%w'
-let g:airline#extensions#anzu#enabled = 0
-Plug 'haya14busa/incsearch.vim'
-nmap /  <Plug>(incsearch-forward)
-nmap ?  <Plug>(incsearch-backward)
-nmap g/ <Plug>(incsearch-stay)
-let g:incsearch#auto_nohlsearch = 1
-nmap n  <Plug>(incsearch-nohl)<Plug>(anzu-n-with-echo)
-nmap N  <Plug>(incsearch-nohl)<Plug>(anzu-N-with-echo)
-nmap *  <Plug>(incsearch-nohl)<Plug>(anzu-star-with-echo)
-nmap #  <Plug>(incsearch-nohl)<Plug>(anzu-sharp-with-echo)
-nmap g* <Plug>(incsearch-nohl-g*)<Plug>(anzu-update-search-status-with-echo)
-nmap g# <Plug>(incsearch-nohl-g#)<Plug>(anzu-update-search-status-with-echo)
-let g:incsearch#emacs_like_keymap = 1
-Plug 'hauleth/sad.vim'
-
-" vim-airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline_exclude_preview = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'light'
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.notexists = '*'
-set linespace=0
-set noshowmode
-set ttimeoutlen=10
+" Deol.nvim
+Plug 'Shougo/deol.nvim'
+function! OpenDeol()
+  if !exists('t:deol')
+    vsplit
+  endif
+  Deol
+endfunction
+nnoremap <Leader>d :call OpenDeol()<CR>
 
 " Git support
 Plug 'mhinz/vim-signify'
@@ -187,9 +126,7 @@ let g:signify_cursorhold_normal = 0
 let g:signify_realtime = 1
 let g:signify_update_on_bufenter = 0
 let g:signify_vcs_list = ['git']
-if exists('&signcolumn')
-  set signcolumn=yes
-endif
+set signcolumn=yes
 omap ac <plug>(signify-motion-outer-pending)
 omap ic <plug>(signify-motion-inner-pending)
 xmap ac <plug>(signify-motion-outer-visual)
@@ -218,11 +155,66 @@ Plug 'nvie/vim-flake8'
 let g:flake8_quickfix_height = 7
 Plug 'vim-scripts/python_match.vim'
 
+" Search enhancement
+Plug 'hauleth/sad.vim'
+Plug 'haya14busa/incsearch.vim'
+let g:incsearch#auto_nohlsearch = 1
+nmap #  <Plug>(incsearch-nohl-#)
+nmap *  <Plug>(incsearch-nohl-*)
+nmap /  <Plug>(incsearch-forward)
+nmap ?  <Plug>(incsearch-backward)
+nmap N  <Plug>(incsearch-nohl-N)
+nmap g# <Plug>(incsearch-nohl-g#)
+nmap g* <Plug>(incsearch-nohl-g*)
+nmap g/ <Plug>(incsearch-stay)
+nmap n  <Plug>(incsearch-nohl-n)
+
+" Tagging
+if executable('ctags')
+  Plug 'ludovicchabant/vim-gutentags'
+  Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
+  nnoremap <silent> <F3> :TagbarToggle<CR>
+endif
+
+" fzf
+Plug 'junegunn/fzf', {
+      \ 'dir': '~/.local/share/fzf',
+      \ 'do': './install --all --no-bash --no-fish',
+      \ }
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit',
+      \ }
+let g:fzf_layout = {'down': '~20%'}
+augroup fzf
+  autocmd! FileType fzf
+  autocmd  FileType fzf set laststatus=0 |
+        \ autocmd BufLeave <buffer> set laststatus=2
+augroup END
+Plug 'junegunn/fzf.vim'
+imap <C-X><C-F> <Plug>(fzf-complete-path)
+nnoremap <silent> <C-P> :Files<CR>
+nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
+
+" vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_exclude_preview = 1
+let g:airline_powerline_fonts = 1
+let g:airline_symbols = {}
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.notexists = '*'
+let g:airline_theme = 'light'
+set linespace=0
+set noshowmode
+set ttimeoutlen=10
+
 " More plugins...
 Plug 'Valloric/ListToggle'
 Plug 'calebsmith/vim-lambdify'
 Plug 'dkarter/bullets.vim'
-Plug 'junegunn/vim-peekaboo'
+Plug 'johngrib/vim-game-code-break'
+Plug 'machakann/vim-highlightedyank'
 Plug 'nacitar/a.vim'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-sleuth'
@@ -232,17 +224,11 @@ Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
 Plug 'fidian/hexmode'
 let g:hexmode_xxd_options = '-g 1 -u'
+Plug 'junegunn/limelight.vim'
+nnoremap <silent> <F6> :Limelight!!<CR>
 Plug 'junegunn/vim-easy-align'
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
-Plug 'machakann/vim-highlightedyank'
-if !exists('##TextYankPost')
-  map y <Plug>(highlightedyank)
-  vunmap <C-C>
-  vunmap <C-Insert>
-  vmap <C-C>      "+y
-  vmap <C-Insert> "+y
-endif
 Plug 'machakann/vim-swap'
 omap a, <Plug>(swap-textobject-a)
 omap i, <Plug>(swap-textobject-i)
@@ -251,43 +237,29 @@ xmap i, <Plug>(swap-textobject-i)
 Plug 'simnalamburt/vim-mundo'
 nnoremap <silent> <F2> :MundoToggle<CR>
 Plug 'tmsvg/pear-tree'
+let g:pear_tree_repeatable_expand = 0
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_openers = 1
 Plug 'tpope/vim-commentary'
 augroup commentary
-  autocmd FileType c,cpp setl commentstring=//\ %s
+  autocmd FileType c,cpp,cuda setl commentstring=//\ %s
 augroup END
-if v:version >= 800
-  Plug 'johngrib/vim-game-code-break'
-  Plug 'ludovicchabant/vim-gutentags'
-else
-  Plug 'ludovicchabant/vim-gutentags', {'branch': 'vim7'}
-endif
-if executable('ctags')
-  Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
-  nnoremap <silent> <F3> :TagbarToggle<CR>
-endif
 
 " Color scheme
 Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
-set t_Co=256
-hi def link pythonClassVar Structure
-Plug 'junegunn/limelight.vim'
-nnoremap <silent> <F6> :Limelight!!<CR>
 
 call plug#end()
 
 silent! colorscheme Tomorrow-Night
 hi clear SpellBad
 hi SpellBad cterm=underline gui=underline
+hi def link pythonClassVar Structure
 
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
 set wildignore+=*.swp,*~,._*
-command! DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
-      \ | diffthis | wincmd p | diffthis
 
 " Hangul IME
 if s:is_win
@@ -316,7 +288,7 @@ nnoremap <Leader><Leader>1 :set ts=2<CR>
 nnoremap <Leader><Leader>2 :set ts=4<CR>
 nnoremap <Leader><Leader>3 :set ts=8<CR>
 nnoremap <Leader>a         :set paste<CR>i
-nnoremap <Leader>d         :let &cc = 81 - &cc<CR>:set cc?<CR>
+nnoremap <Leader>c         :let &cc = 81 - &cc<CR>:set cc?<CR>
 nnoremap <Leader>e         :set et! et?<CR>
 nnoremap <Leader>s         :set list! list?<CR>
 nnoremap <S-Tab>           <C-W>W

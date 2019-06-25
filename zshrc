@@ -1,6 +1,6 @@
 autoload -U is-at-least
 
-setopt extendedglob globdots nobgnice
+setopt extendedglob globdots histignorespace nobgnice
 umask 022
 
 stty -ixon
