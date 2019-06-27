@@ -1,27 +1,29 @@
 " vim: sw=2 sts=-1 et
 
-" VIM 8 ONLY
+set encoding=utf-8
+if v:version < 800
+  echoerr 'Vim 8 required'
+endif
 source $VIMRUNTIME/defaults.vim
-let s:is_win = has('win16') || has('win32') || has('win64')
 
 " Windows-Unix compatibility
+let s:is_win = has('win16') || has('win32') || has('win64')
 source $VIMRUNTIME/mswin.vim
 behave xterm
-silent! unmap <C-F>
-silent! unmap <C-H>
+silent! nunmap <C-F>
+silent! nunmap <C-H>
+silent! nunmap <C-Y>
 silent! unmap! <C-F>
 silent! unmap! <C-H>
-unmap <C-Y>
 if s:is_win
   set runtimepath^=~/.vim
 else
-  nunmap <C-Z>
+  silent! nunmap <C-Z>
 endif
 
 call plug#begin('~/.vim/plugged')
 
 " Not so sensible ;-)
-set encoding=utf-8
 set viminfo=
 Plug 'tpope/vim-sensible'
 set display=uhex
@@ -108,6 +110,7 @@ endif
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = '<C-F>'
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " Deol.nvim
 Plug 'Shougo/deol.nvim'
@@ -149,6 +152,7 @@ augroup conceal
   autocmd FileType markdown setl conceallevel=2
   autocmd FileType tex      hi clear Conceal
 augroup END
+Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key = '<C-G>'
 Plug 'nvie/vim-flake8'
@@ -254,7 +258,7 @@ call plug#end()
 silent! colorscheme Tomorrow-Night
 hi clear SpellBad
 hi SpellBad cterm=underline gui=underline
-hi def link pythonClassVar Structure
+hi link pythonClassVar Structure
 
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
