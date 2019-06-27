@@ -66,7 +66,6 @@ if [[ -n $(command -v vim) ]]; then
     info vimrc
     inst vimrc ~/.vimrc
     curl -fsLo ~/.vim/autoload/plug.vim --create-dirs git.io/VgrSsw
-    inst ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
     vim +PlugClean! +PlugUpdate +qa
 
     # fzf

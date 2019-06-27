@@ -67,50 +67,51 @@ else
   set directory=/tmp
 endif
 
-" YouCompleteMe
-if executable('cmake')
-  function! BuildYCM(info)
-    if a:info.status != 'unchanged' || a:info.force
-      if s:is_win
-        silent !py install.py --clang-completer
-      else
-        execute 'silent !./install.py --clang-completer'
-      endif
-      redraw!
-    endif
-  endfunction
-  Plug 'Valloric/YouCompleteMe', {'do': function('BuildYCM')}
+" NCM2
+if !empty($PYTHON3_HOST_PROG)
+  let g:python3_host_prog = $PYTHON3_HOST_PROG
 endif
-let g:ycm_always_populate_location_list = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_max_num_candidates = 10
-let g:ycm_semantic_triggers = {
-      \ 'c':            ['->', '.', 're![a-zA-Z_]+\w'],
-      \ 'cpp,cuda':     ['->', '.', '::', 're![a-zA-Z_]+\w'],
-      \ 'cs,python,vb': ['.', 're![a-zA-Z_]+\w'],
-      \ 'lua':          ['.', ':', 're![a-zA-Z_]+\w'],
-      \ 'ruby,rust':    ['.', '::', 're![a-zA-Z_]+\w'],
-      \ }
-nnoremap <silent> <F7> :YcmRestartServer<CR>
-augroup ycm
-  autocmd FileType *            let g:ycm_auto_trigger = 0
-  autocmd FileType c            let g:ycm_auto_trigger = 1
-  autocmd FileType cpp,cuda     let g:ycm_auto_trigger = 1
-  autocmd FileType cs,python,vb let g:ycm_auto_trigger = 1
-  autocmd FileType lua          let g:ycm_auto_trigger = 1
-  autocmd FileType ruby,rust    let g:ycm_auto_trigger = 1
-augroup END
-if !s:is_win
-  Plug 'rdnetto/YCM-Generator', {'branch': 'stable'}
-endif
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+let g:ncm2#matcher = 'substrfuzzy'
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+autocmd BufEnter * call ncm2#enable_for_buffer()
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-cssomni'
+Plug 'ncm2/ncm2-html-subscope'
+Plug 'ncm2/ncm2-jedi'
+nnoremap <Leader>j2 :let g:ncm2_jedi#python_version = 2<CR>
+nnoremap <Leader>j3 :let g:ncm2_jedi#python_version = 3<CR>
+Plug 'ncm2/ncm2-markdown-subscope'
+Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-pyclang'
+let g:ncm2_pyclang#detect_sys_inc_args = 0
+autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
+Plug 'ncm2/ncm2-ultisnips'
 
 " UltiSnips
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = '<C-F>'
 let g:UltiSnipsRemoveSelectModeMappings = 0
+
+" ALE
+Plug 'w0rp/ale'
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+let g:ale_list_window_size = 7
+nmap <silent> [a <Plug>(ale_previous_wrap)
+nmap <silent> ]a <Plug>(ale_next_wrap)
+" Without regexp
+nnoremap <F4> :ALEFix<CR>
+hi clear ALEErrorSign
+hi clear ALEWarningSign
 
 " Deol.nvim
 Plug 'Shougo/deol.nvim'
@@ -181,10 +182,17 @@ if executable('ctags')
 endif
 
 " fzf
-Plug 'junegunn/fzf', {
-      \ 'dir': '~/.local/share/fzf',
-      \ 'do': './install --all --no-bash --no-fish',
-      \ }
+if s:is_win
+  " Don't update...
+  Plug 'junegunn/fzf', {
+        \ 'dir': '~/.local/share/fzf',
+        \ }
+else
+  Plug 'junegunn/fzf', {
+        \ 'dir': '~/.local/share/fzf',
+        \ 'do': './install --all --no-bash --no-fish',
+        \ }
+endif
 let g:fzf_action = {
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit',
@@ -284,7 +292,6 @@ noremap  <Right> <Nop>
 " Ⓑ Ⓐ
 
 " Some useful keymaps
-nnoremap <F4>              :%s/\s\+$//e<CR><C-L>
 nnoremap <Leader>1         :set sw=2<CR>
 nnoremap <Leader>2         :set sw=4<CR>
 nnoremap <Leader>3         :set sw=8<CR>

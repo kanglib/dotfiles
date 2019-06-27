@@ -26,7 +26,6 @@ setx PYTHONSTARTUP $env:HOME\.config\pythonrc
 if (gcm -ea SilentlyContinue gvim) {
     inst vimrc ~\.vimrc
     md -f ~\.vim\autoload >$null
-    inst ycm_extra_conf.py ~\.vim\.ycm_extra_conf.py
     curl git.io/VgrSsw -OutFile ~\.vim\autoload\plug.vim
     gvim +PlugClean! +PlugUpdate +qa
 
