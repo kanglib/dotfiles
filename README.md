@@ -19,6 +19,9 @@
 ## Installation
 
     sudo apt install gdb tmux zsh unzip vim exuberant-ctags
+    # Install Jedi for versions you want
+    sudo pip2 install jedi
+    sudo pip3 install jedi pynvim
     ./install
     # (Re)start Zsh
 
