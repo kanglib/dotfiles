@@ -39,12 +39,14 @@ set fileencodings=ucs-bom,utf-8,cp949,latin1
 set hlsearch
 set ignorecase smartcase
 set linebreak
+set modeline
 set mouse=a
 set nofoldenable
 set number
 set regexpengine=1
 set shortmess+=a
 set shortmess-=S
+set spelllang+=cjk
 set splitright
 set sw=4 sts=-1 et
 set title
@@ -68,9 +70,6 @@ else
 endif
 
 " NCM2
-if !empty($PYTHON3_HOST_PROG)
-  let g:python3_host_prog = $PYTHON3_HOST_PROG
-endif
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
@@ -105,7 +104,6 @@ let g:UltiSnipsRemoveSelectModeMappings = 0
 Plug 'w0rp/ale'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
-let g:ale_list_window_size = 7
 nmap <silent> [a <Plug>(ale_previous_wrap)
 nmap <silent> ]a <Plug>(ale_next_wrap)
 " Without regexp
@@ -156,8 +154,6 @@ augroup END
 Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key = '<C-G>'
-Plug 'nvie/vim-flake8'
-let g:flake8_quickfix_height = 7
 Plug 'vim-scripts/python_match.vim'
 
 " Search enhancement
@@ -230,7 +226,6 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'nacitar/a.vim'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-sleuth'
-Plug 'tweekmonster/startuptime.vim'
 Plug 'yous/PreserveNoEOL'
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1

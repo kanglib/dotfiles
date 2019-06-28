@@ -3,7 +3,8 @@
 
 ## Supported systems
 * Ubuntu 14.04+ via PuTTY (WSL is OK)
-* Windows 10 x64 with [GVim](https://bintray.com/micbou/generic/vim)
+* Windows 10 x64 with
+    [GVim](https://github.com/vim/vim-win32-installer/releases)
 
 ## Requirements
 * Vim 8
@@ -26,9 +27,7 @@
     # (Re)start Zsh
 
 ## pythonrc
-Python prompts are colorized unless the interpreters are started directly on
-Windows, or [ANSICON](https://github.com/adoxa/ansicon) and
-[psutil](https://pypi.org/project/psutil/) are not installed.
+Python prompts are colorized on POSIX systems.
 
 ## vimrc
 ### Clang on Windows
@@ -36,5 +35,5 @@ I use Clang as the default C/C++ compiler. Modify the F5 key bindings if you
 want MSVC/GCC or another.
 
 ### [NCM2](https://github.com/ncm2/ncm2)
-On Windows with both Python 2/3, set `%PYTHON3_HOST_PROG%` to the 3's
-executable; otherwise nvim-yarp will refuse to work.
+On Windows with both Python 2/3, copy or link the 3's executable to
+`python3.exe`; otherwise nvim-yarp will refuse to work.
