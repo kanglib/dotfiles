@@ -101,7 +101,7 @@ let g:UltiSnipsExpandTrigger = '<C-F>'
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " ALE
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
 nmap <silent> [a <Plug>(ale_previous_wrap)
@@ -154,6 +154,7 @@ augroup END
 Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key = '<C-G>'
+Plug 'kanglib/vim-loves-dafny', {'for': 'dafny'}
 Plug 'vim-scripts/python_match.vim'
 
 " Search enhancement
@@ -249,9 +250,7 @@ let g:pear_tree_smart_backspace = 1
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_openers = 1
 Plug 'tpope/vim-commentary'
-augroup commentary
-  autocmd FileType c,cpp,cuda setl commentstring=//\ %s
-augroup END
+autocmd vimrc FileType c,cpp,cuda,dafny setl commentstring=//\ %s
 
 " Color scheme
 Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}

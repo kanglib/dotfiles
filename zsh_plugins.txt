@@ -15,5 +15,5 @@ zsh-users/zsh-completions
 
 # See https://github.com/caarlos0/dotfiles/blob/master/antibody/bundles.txt
 sindresorhus/pure
-zsh-users/zsh-syntax-highlighting
+zdharma/fast-syntax-highlighting
 zsh-users/zsh-history-substring-search
