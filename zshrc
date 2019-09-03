@@ -11,6 +11,7 @@ bindkey -s "^S" "^Asudo ^E"
 
 PURE_CMD_MAX_EXEC_TIME=1
 source ~/.config/zsh_plugins.sh
+FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
 
 unalias ag 2>/dev/null
 alias -g ...=../..
