@@ -1,31 +1,31 @@
-# PowerShell 5.0+
+﻿# PowerShell 5.0+
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-md -f ~\.config >$null
+mkdir -f ~\.config > $null
 setx HOME "$env:USERPROFILE"
 
-function inst ($src, $dest) {
+function inst ($src,$dest) {
     if (Test-Path $dest) {
-        if (gi -ea SilentlyContinue $dest | ?{$_.LinkType}) {
-            (gi $dest).Delete() >$null
+        if (Get-Item -ea SilentlyContinue $dest | Where-Object { $_.LinkType }) {
+            (Get-Item $dest).Delete() > $null
         } else {
-            mv -Force $dest "$dest.bak" >$null
+            mv -Force $dest "$dest.bak" > $null
         }
     }
-    ni -it SymbolicLink $dest -Value $src >$null
+    New-Item -it SymbolicLink $dest -Value $src > $null
 }
 
 inst git ~\.config\git
-ni -ea SilentlyContinue ~\.config\gitconfig.local >$null
+New-Item -ea SilentlyContinue ~\.config\gitconfig.local > $null
 
 inst pythonrc ~\.config\pythonrc
-md -f ~\pip >$null
+mkdir -f ~\pip > $null
 inst pip\pip.conf ~\pip\pip.ini
 setx PYTHONSTARTUP $env:HOME\.config\pythonrc
 
-if (gcm -ea SilentlyContinue gvim) {
+if (Get-Command -ea SilentlyContinue gvim) {
     inst vimrc ~\.vimrc
-    md -f ~\.vim\autoload >$null
+    mkdir -f ~\.vim\autoload > $null
     curl git.io/VgrSsw -OutFile ~\.vim\autoload\plug.vim
     gvim +PlugClean! +PlugUpdate +qa
 
@@ -36,7 +36,7 @@ if (gcm -ea SilentlyContinue gvim) {
     curl $pattern.Match($json).Value -OutFile $temp
     Expand-Archive -f -Path $temp -DestinationPath ~\.local\share\fzf\bin
 
-    if (gcm -ea SilentlyContinue rg) {
+    if (Get-Command -ea SilentlyContinue rg) {
         setx FZF_DEFAULT_COMMAND 'rg --files --hidden -g "!.git"'
     }
 }
