@@ -1,3 +1,5 @@
+# From https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/colored-man-pages/colored-man-pages.plugin.zsh
+
 function colored() {
 	env \
 		LESS_TERMCAP_mb=$(printf "\e[31m") \

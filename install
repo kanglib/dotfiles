@@ -9,12 +9,10 @@ info() {
 }
 
 inst() {
-    if [[ -e $2 ]]; then
-        if [[ -h $2 ]]; then
-            rm -f $2
-        else
-            mv -f $2 $2.bak
-        fi
+    if [[ -h $2 ]]; then
+        rm -f $2
+    elif [[ -e $2 ]]; then
+        mv -f $2 $2.bak
     fi
     ln -s ~+/$1 $2
 }
@@ -54,8 +52,8 @@ fi
 
 if [[ -n $(command -v tmux) ]]; then
     info tmux.conf
-    inst tmux.conf ~/.tmux.conf
-    inst tmux-powerlinerc ~/.tmux-powerlinerc
+    inst tmux/tmux.conf ~/.tmux.conf
+    inst tmux/tmux-powerlinerc ~/.tmux-powerlinerc
     mkdir -p ~/.tmux
     inst tmux/segments ~/.tmux/segments
     inst tmux/themes ~/.tmux/themes
@@ -78,13 +76,14 @@ fi
 
 if [[ -n $(command -v zsh) ]]; then
     info zshrc
-    inst zshenv ~/.zshenv
+    inst zsh/zshenv ~/.zshenv
+    mkdir -p ~/.config/zsh
+    inst zsh/colored-man-pages.zsh ~/.config/zsh/colored-man-pages.zsh
+    inst zsh/f-sy-h.ini ~/.config/zsh/f-sy-h.ini
     curl -fsL git.io/antibody | sh -s -- -b ~/.local/bin
-    zsh -c "antibody bundle < zsh_plugins.txt" &>/dev/null || true
-    zsh -c "antibody bundle < zsh_plugins.txt" >~/.config/zsh_plugins.sh
-    inst f-sy-h.ini ~/.config/f-sy-h.ini
-    inst colored-man-pages.zsh ~/.config/colored-man-pages.zsh
-    inst zshrc ~/.zshrc
+    zsh -c "antibody bundle < zsh/zsh_plugins.txt" &>/dev/null || true
+    zsh -c "antibody bundle < zsh/zsh_plugins.txt" >~/.config/zsh/zsh_plugins.sh
+    inst zsh/zshrc ~/.zshrc
 
     if [[ $(uname -m) == x86_64 ]]; then
         [[ $TMPDIR ]] || TMPDIR="$(mktemp -d)"

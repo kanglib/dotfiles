@@ -10,10 +10,10 @@ bindkey "\e[4~" end-of-line
 bindkey -s "^S" "^Asudo ^E"
 
 PURE_CMD_MAX_EXEC_TIME=1
-source ~/.config/zsh_plugins.sh
-fast-theme ~/.config/f-sy-h.ini >/dev/null
+source ~/.config/zsh/zsh_plugins.sh
+source ~/.config/zsh/colored-man-pages.zsh
 FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
-source ~/.config/colored-man-pages.zsh
+fast-theme ~/.config/zsh/f-sy-h.ini >/dev/null
 
 unalias ag 2>/dev/null
 alias -g ...=../..
