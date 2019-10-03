@@ -5,7 +5,7 @@ mkdir -p ~/.config
 mkdir -p ~/.local/bin
 
 info() {
-    printf "\e[1;34mInstalling %s ...\e[m\n" $1
+    printf "\e[34mInstalling %s ...\e[m\n" $1
 }
 
 inst() {
@@ -33,6 +33,9 @@ info cheat.sh
 curl -fso ~/.local/bin/cht.sh https://cht.sh/:cht.sh
 chmod +x ~/.local/bin/cht.sh
 
+info dir_colors
+curl -fsLo ~/.dircolors git.io/vFp6j
+
 info pythonrc
 inst pythonrc ~/.config/pythonrc
 inst pip ~/.config/pip
@@ -58,7 +61,7 @@ if [[ -n $(command -v tmux) ]]; then
     inst tmux/themes ~/.tmux/themes
     pull https://github.com/erikw/tmux-powerline ~/.tmux/tmux-powerline
     pull https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    printf "\e[1;36mSee https://github.com/tmux-plugins/tpm#key-bindings to"
+    printf "\e[36mSee https://github.com/tmux-plugins/tpm#key-bindings to"
     printf " complete the installation.\e[m\n" $1
 fi
 
@@ -79,6 +82,8 @@ if [[ -n $(command -v zsh) ]]; then
     curl -fsL git.io/antibody | sh -s -- -b ~/.local/bin
     zsh -c "antibody bundle < zsh_plugins.txt" &>/dev/null || true
     zsh -c "antibody bundle < zsh_plugins.txt" >~/.config/zsh_plugins.sh
+    inst f-sy-h.ini ~/.config/f-sy-h.ini
+    inst colored-man-pages.zsh ~/.config/colored-man-pages.zsh
     inst zshrc ~/.zshrc
 
     if [[ $(uname -m) == x86_64 ]]; then
@@ -91,4 +96,4 @@ if [[ -n $(command -v zsh) ]]; then
     fi
 fi
 
-printf "\e[1;36mDone!\e[m\n"
+printf "\e[32mDone!\e[m\n"

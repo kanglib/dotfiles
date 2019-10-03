@@ -11,7 +11,9 @@ bindkey -s "^S" "^Asudo ^E"
 
 PURE_CMD_MAX_EXEC_TIME=1
 source ~/.config/zsh_plugins.sh
+fast-theme ~/.config/f-sy-h.ini >/dev/null
 FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
+source ~/.config/colored-man-pages.zsh
 
 unalias ag 2>/dev/null
 alias -g ...=../..
@@ -32,6 +34,7 @@ if [[ -n $(command -v exa) ]]; then
     alias la="l -a"
     alias lt="l -smod"
     alias lat="l -asmod"
+    export EXA_COLORS="ur=33:uw=31:ux=32;04:ue=32:sn=32:df=32:uu=33:gu=33:lc=31"
 else
     alias l="LANG=C.UTF-8 ls  --time-style=long-iso -lh --color"
     alias la="l -A"

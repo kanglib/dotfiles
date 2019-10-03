@@ -49,6 +49,7 @@ set shortmess-=S
 set spelllang+=cjk
 set splitright
 set sw=4 sts=-1 et
+set t_md=
 set title
 set updatetime=100
 inoremap <C-U> <C-G>u<C-U>

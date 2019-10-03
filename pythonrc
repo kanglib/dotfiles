@@ -4,5 +4,5 @@ import os
 import sys
 
 if sys.stdout.isatty() and os.name == 'posix':
-    sys.ps1 = '\033[1;36m>>>\033[m '
-    sys.ps2 = '\033[1;33m...\033[m '
+    sys.ps1 = '\033[36m>>>\033[m '
+    sys.ps2 = '\033[33m...\033[m '
