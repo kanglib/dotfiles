@@ -50,6 +50,7 @@ set spelllang+=cjk
 set splitright
 set sw=4 sts=-1 et
 set t_md=
+set t_ut=
 set title
 set updatetime=100
 inoremap <C-U> <C-G>u<C-U>
@@ -81,6 +82,7 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 autocmd BufEnter * call ncm2#enable_for_buffer()
+Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm2'}
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-cssomni'
 Plug 'ncm2/ncm2-html-subscope'
@@ -202,9 +204,14 @@ augroup fzf
         \ autocmd BufLeave <buffer> set laststatus=2
 augroup END
 Plug 'junegunn/fzf.vim'
-imap <C-X><C-F> <Plug>(fzf-complete-path)
-nnoremap <silent> <C-P> :Files<CR>
-nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
+if has('patch-8.1.2114') && !s:is_win
+  Plug 'liuchengxu/vim-clap'
+  nnoremap <silent> <C-P> :Clap! files<CR>
+  nnoremap <silent> <Leader>f :execute 'Clap! grep ' . expand('<cword>')<CR>
+else
+  nnoremap <silent> <C-P> :Files<CR>
+  nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
+endif
 
 " vim-airline
 Plug 'vim-airline/vim-airline'
