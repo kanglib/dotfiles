@@ -50,7 +50,6 @@ set spelllang+=cjk
 set splitright
 set sw=4 sts=-1 et
 set t_md=
-set t_ut=
 set title
 set updatetime=100
 inoremap <C-U> <C-G>u<C-U>
@@ -82,7 +81,7 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 autocmd BufEnter * call ncm2#enable_for_buffer()
-Plug 'fgrsnau/ncm2-otherbuf', {'branch': 'ncm2'}
+Plug 'fgrsnau/ncm2-otherbuf'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-cssomni'
 Plug 'ncm2/ncm2-html-subscope'
@@ -252,6 +251,11 @@ xmap a, <Plug>(swap-textobject-a)
 xmap i, <Plug>(swap-textobject-i)
 Plug 'simnalamburt/vim-mundo'
 nnoremap <silent> <F2> :MundoToggle<CR>
+Plug 'terryma/vim-smooth-scroll'
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 6)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 6)<CR>
 Plug 'tmsvg/pear-tree'
 let g:pear_tree_repeatable_expand = 0
 let g:pear_tree_smart_backspace = 1
@@ -266,6 +270,8 @@ Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
 call plug#end()
 
 silent! colorscheme Tomorrow-Night
+" Workaround for microsoft/terminal#832
+hi Normal ctermfg=15 ctermbg=0
 hi clear SpellBad
 hi SpellBad cterm=underline gui=underline
 hi link pythonClassVar Structure
