@@ -218,8 +218,9 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline_exclude_preview = 1
 let g:airline_powerline_fonts = 1
 let g:airline_symbols = {}
-let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.linenr = ''
 let g:airline_symbols.notexists = '*'
+let g:airline_symbols.whitespace = ''
 let g:airline_theme = 'light'
 set linespace=0
 set noshowmode
