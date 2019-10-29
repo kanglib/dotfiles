@@ -1,8 +1,8 @@
 " vim: sw=2 sts=-1 et
 
 set encoding=utf-8
-if v:version < 800
-  echoerr 'Vim 8 required'
+if v:version < 800 || !has('python3')
+  echoerr 'Vim 8 with Python 3 support required'
 endif
 source $VIMRUNTIME/defaults.vim
 
@@ -10,11 +10,12 @@ source $VIMRUNTIME/defaults.vim
 let s:is_win = has('win16') || has('win32') || has('win64')
 source $VIMRUNTIME/mswin.vim
 behave xterm
-silent! nunmap <C-F>
-silent! nunmap <C-H>
-silent! nunmap <C-Y>
+silent! unmap <C-F>
+silent! unmap <C-H>
+silent! unmap <C-Y>
 silent! unmap! <C-F>
 silent! unmap! <C-H>
+silent! unmap! <C-Y>
 if s:is_win
   set runtimepath^=~/.vim
 else
@@ -99,7 +100,6 @@ Plug 'ncm2/ncm2-ultisnips'
 " UltiSnips
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger = '<C-F>'
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " ALE
@@ -203,14 +203,8 @@ augroup fzf
         \ autocmd BufLeave <buffer> set laststatus=2
 augroup END
 Plug 'junegunn/fzf.vim'
-if has('patch-8.1.2114') && !s:is_win
-  Plug 'liuchengxu/vim-clap'
-  nnoremap <silent> <C-P> :Clap! files<CR>
-  nnoremap <silent> <Leader>f :execute 'Clap! grep ' . expand('<cword>')<CR>
-else
-  nnoremap <silent> <C-P> :Files<CR>
-  nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
-endif
+nnoremap <silent> <C-P> :Files<CR>
+nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
 
 " vim-airline
 Plug 'vim-airline/vim-airline'
@@ -252,11 +246,6 @@ xmap a, <Plug>(swap-textobject-a)
 xmap i, <Plug>(swap-textobject-i)
 Plug 'simnalamburt/vim-mundo'
 nnoremap <silent> <F2> :MundoToggle<CR>
-Plug 'terryma/vim-smooth-scroll'
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 3)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 3)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 6)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 6)<CR>
 Plug 'tmsvg/pear-tree'
 let g:pear_tree_repeatable_expand = 0
 let g:pear_tree_smart_backspace = 1

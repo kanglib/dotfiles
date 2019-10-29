@@ -79,7 +79,6 @@ if [[ -n $(command -v zsh) ]]; then
     inst zsh/zshenv ~/.zshenv
     mkdir -p ~/.config/zsh
     inst zsh/colored-man-pages.zsh ~/.config/zsh/colored-man-pages.zsh
-    inst zsh/f-sy-h.ini ~/.config/zsh/f-sy-h.ini
     curl -fsL git.io/antibody | sh -s -- -b ~/.local/bin
     zsh -c "antibody bundle < zsh/zsh_plugins.txt" &>/dev/null || true
     zsh -c "antibody bundle < zsh/zsh_plugins.txt" >~/.config/zsh/zsh_plugins.sh

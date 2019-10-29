@@ -1,6 +1,12 @@
 autoload -U is-at-least
 
-setopt extendedglob globdots histignorespace nobgnice
+setopt extendedglob
+setopt globdots
+setopt histignorealldups
+setopt histignorespace
+setopt histreduceblanks
+setopt histsavenodups
+setopt nobgnice
 umask 022
 
 stty -ixon
@@ -12,8 +18,6 @@ bindkey -s "^S" "^Asudo ^E"
 PURE_CMD_MAX_EXEC_TIME=1
 source ~/.config/zsh/zsh_plugins.sh
 source ~/.config/zsh/colored-man-pages.zsh
-FAST_HIGHLIGHT[chroma-git]="chroma/-ogit.ch"
-fast-theme ~/.config/zsh/f-sy-h.ini >/dev/null
 
 unalias ag 2>/dev/null
 alias -g ...=../..
