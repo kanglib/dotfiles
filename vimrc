@@ -209,6 +209,8 @@ nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
 " vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+let g:airline_detect_iminsert = 1
+let g:airline_detect_spelllang = 0
 let g:airline_exclude_preview = 1
 let g:airline_powerline_fonts = 1
 let g:airline_symbols = {}
@@ -223,6 +225,7 @@ set ttimeoutlen=10
 " More plugins...
 Plug 'Valloric/ListToggle'
 Plug 'calebsmith/vim-lambdify'
+Plug 'chazy/cscope_maps'
 Plug 'dkarter/bullets.vim'
 Plug 'johngrib/vim-game-code-break'
 Plug 'machakann/vim-highlightedyank'
@@ -278,16 +281,6 @@ if s:is_win
     autocmd InsertLeave * :set imdisable
   augroup END
 endif
-
-inoremap <Up>    <Nop>
-noremap  <Up>    <Nop>
-inoremap <Down>  <Nop>
-noremap  <Down>  <Nop>
-inoremap <Left>  <Nop>
-inoremap <Right> <Nop>
-noremap  <Left>  <Nop>
-noremap  <Right> <Nop>
-" Ⓑ Ⓐ
 
 " Some useful keymaps
 nnoremap <Leader>1         :set sw=2<CR>
