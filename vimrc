@@ -113,16 +113,6 @@ nnoremap <F4> :ALEFix<CR>
 hi clear ALEErrorSign
 hi clear ALEWarningSign
 
-" Deol.nvim
-Plug 'Shougo/deol.nvim'
-function! OpenDeol()
-  if !exists('t:deol')
-    vsplit
-  endif
-  Deol
-endfunction
-nnoremap <Leader>d :call OpenDeol()<CR>
-
 " Git support
 Plug 'mhinz/vim-signify'
 let g:signify_cursorhold_insert = 0
@@ -161,22 +151,51 @@ Plug 'vim-scripts/python_match.vim'
 
 " Search enhancement
 Plug 'hauleth/sad.vim'
-Plug 'haya14busa/incsearch.vim'
-let g:incsearch#auto_nohlsearch = 1
-nmap #  <Plug>(incsearch-nohl-#)
-nmap *  <Plug>(incsearch-nohl-*)
-nmap /  <Plug>(incsearch-forward)
-nmap ?  <Plug>(incsearch-backward)
-nmap N  <Plug>(incsearch-nohl-N)
-nmap g# <Plug>(incsearch-nohl-g#)
-nmap g* <Plug>(incsearch-nohl-g*)
-nmap g/ <Plug>(incsearch-stay)
-nmap n  <Plug>(incsearch-nohl-n)
+if has('patch-8.0.1206')
+  Plug 'markonm/traces.vim'
+else
+  Plug 'haya14busa/incsearch.vim'
+  let g:incsearch#auto_nohlsearch = 1
+  nmap #  <Plug>(incsearch-nohl-#)
+  nmap *  <Plug>(incsearch-nohl-*)
+  nmap /  <Plug>(incsearch-forward)
+  nmap ?  <Plug>(incsearch-backward)
+  nmap N  <Plug>(incsearch-nohl-N)
+  nmap g# <Plug>(incsearch-nohl-g#)
+  nmap g* <Plug>(incsearch-nohl-g*)
+  nmap g/ <Plug>(incsearch-stay)
+  nmap n  <Plug>(incsearch-nohl-n)
+endif
 
 " Tagging
+if has('cscope') && executable('cscope')
+  let s:db = findfile('cscope.out', '.;')
+  if !empty(s:db)
+    execute 'cscope add ' . s:db
+  endif
+  set cscopetag
+  set cscopeverbose
+  nmap <C-\>a :cs find a <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+  nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\><C-\>a :vert scs find a <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\><C-\>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\><C-\>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\><C-\>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
+  nmap <C-\><C-\>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-\><C-\>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  nmap <C-\><C-\>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
+endif
 if executable('ctags')
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'majutsushi/tagbar', {'on': 'TagbarToggle'}
+  if has('cscope') && !&cscopetag
+    nmap <C-]> :exe 'tjump ' . expand('<cword>')<CR>
+  endif
   nnoremap <silent> <F3> :TagbarToggle<CR>
 endif
 
@@ -204,7 +223,7 @@ augroup fzf
 augroup END
 Plug 'junegunn/fzf.vim'
 nnoremap <silent> <C-P> :Files<CR>
-nnoremap <silent> <Leader>f :execute 'Rg ' . expand('<cword>')<CR>
+nnoremap <silent> <Leader>f :exe 'Rg ' . expand('<cword>')<CR>
 
 " vim-airline
 Plug 'vim-airline/vim-airline'
@@ -225,7 +244,6 @@ set ttimeoutlen=10
 " More plugins...
 Plug 'Valloric/ListToggle'
 Plug 'calebsmith/vim-lambdify'
-Plug 'chazy/cscope_maps'
 Plug 'dkarter/bullets.vim'
 Plug 'johngrib/vim-game-code-break'
 Plug 'machakann/vim-highlightedyank'
@@ -264,7 +282,7 @@ call plug#end()
 
 silent! colorscheme Tomorrow-Night
 " Workaround for microsoft/terminal#832
-hi Normal ctermfg=15 ctermbg=0
+hi Normal ctermfg=NONE ctermbg=NONE
 hi clear SpellBad
 hi SpellBad cterm=underline gui=underline
 hi link pythonClassVar Structure
