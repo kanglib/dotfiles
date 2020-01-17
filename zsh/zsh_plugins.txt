@@ -7,6 +7,7 @@ robbyrussell/oh-my-zsh path:plugins/fancy-ctrl-z
 robbyrussell/oh-my-zsh path:plugins/ssh-agent
 robbyrussell/oh-my-zsh path:plugins/ubuntu
 
+agkozak/zsh-z
 caarlos0/zsh-mkc
 mafredri/zsh-async
 simnalamburt/cgitc
