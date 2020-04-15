@@ -22,6 +22,8 @@ source ~/.config/zsh/colored-man-pages.zsh
 unalias ag 2>/dev/null
 alias -g ...=../..
 alias -g ....=../../..
+alias -g .....=../../../..
+alias -g ......=../../../../..
 alias gdb="gdb -q"
 alias latexmk="latexmk -pdf -interaction=nonstopmode -halt-on-error"
 alias pk="pkill -9 -t"
@@ -36,18 +38,20 @@ fi
 if [[ -n $(command -v exa) ]]; then
     alias l="LANG=C.UTF-8 exa --time-style=long-iso -l"
     alias la="l -a"
+    alias lr="l -T"
     alias lt="l -smod"
-    alias lat="l -asmod"
+    alias lw="l -G"
+    alias lar="la -T"
+    alias lat="la -smod"
     export EXA_COLORS="ur=33:uw=31:ux=32;04:ue=32:sn=32:df=32:uu=33:gu=33:lc=31"
 else
     alias l="LANG=C.UTF-8 ls  --time-style=long-iso -lh --color"
     alias la="l -A"
+    alias lr="l -R"
     alias lt="l -tr"
-    alias lat="l -Atr"
+    alias lar="la -R"
+    alias lat="la -tr"
 fi
-alias ll=l
-alias lr="l -R"
-alias lar="la -R"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

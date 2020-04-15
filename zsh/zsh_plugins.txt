@@ -4,13 +4,13 @@ robbyrussell/oh-my-zsh path:plugins/command-not-found
 robbyrussell/oh-my-zsh path:plugins/common-aliases
 robbyrussell/oh-my-zsh path:plugins/extract
 robbyrussell/oh-my-zsh path:plugins/fancy-ctrl-z
+robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/ssh-agent
 robbyrussell/oh-my-zsh path:plugins/ubuntu
 
 agkozak/zsh-z
 caarlos0/zsh-mkc
 mafredri/zsh-async
-simnalamburt/cgitc
 zsh-users/zsh-completions
 
 # See https://github.com/caarlos0/dotfiles/blob/master/antibody/bundles.txt
