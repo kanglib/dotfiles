@@ -4,6 +4,8 @@
 [core]
 	ignoreCase = true
 	quotePath = false
+[credential]
+	helper = cache
 [diff]
 	compactionHeuristic = true
 	renames = copies

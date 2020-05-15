@@ -9,14 +9,14 @@ function inst ($src,$dest) {
         if (Get-Item -ea SilentlyContinue $dest | Where-Object { $_.LinkType }) {
             (Get-Item $dest).Delete() > $null
         } else {
-            mv -Force $dest "$dest.bak" > $null
+            mv -Force $dest "$dest.old" > $null
         }
     }
     New-Item -it SymbolicLink $dest -Value $src > $null
 }
 
 inst git ~\.config\git
-New-Item -ea SilentlyContinue ~\.config\gitconfig.local > $null
+inst gitconfig.win ~\.config\gitconfig.local
 
 inst pythonrc ~\.config\pythonrc
 mkdir -f ~\pip > $null
@@ -29,7 +29,7 @@ if (Get-Command -ea SilentlyContinue gvim) {
     curl git.io/VgrSsw -OutFile ~\.vim\autoload\plug.vim
     gvim +PlugClean! +PlugUpdate +qa
 
-    # Why bother i386? 😂
+    # Why bother i386?
     $pattern = [regex]"https://[\w./-]+windows_amd64\.zip"
     $json = curl https://api.github.com/repos/junegunn/fzf-bin/releases/latest
     $temp = "$env:TEMP\fzf.zip"

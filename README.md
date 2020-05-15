@@ -26,6 +26,10 @@
     ./install
     # (Re)start Zsh
 
+## gitconfig
+Install [delta](https://github.com/dandavison/delta/releases/latest) to make
+`git diff` pretty. (Unix only)
+
 ## pythonrc
 Python prompts are colorized on POSIX systems.
 
