@@ -2,7 +2,7 @@
 [@kanglib](https://github.com/kanglib) does dotfiles
 
 ## Supported systems
-* Ubuntu 14.04+ via PuTTY (WSL is OK)
+* Ubuntu 14.04+ via Windows Terminal/PuTTY/WSL
 * Windows 10 x64 with
     [GVim](https://github.com/vim/vim-win32-installer/releases)
 

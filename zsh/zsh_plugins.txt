@@ -14,5 +14,5 @@ mafredri/zsh-async
 zsh-users/zsh-completions
 
 # See https://github.com/caarlos0/dotfiles/blob/master/antibody/bundles.txt
-sindresorhus/pure
+romkatv/powerlevel10k
 zsh-users/zsh-syntax-highlighting
