@@ -244,6 +244,10 @@ set ttimeoutlen=10
 " More plugins...
 Plug 'Valloric/ListToggle'
 Plug 'calebsmith/vim-lambdify'
+Plug 'dciccale/guizoom.vim'
+nmap + :ZoomIn<CR>
+nmap - :ZoomOut<CR>
+nmap <Leader>= :ZoomReset<CR>
 Plug 'dkarter/bullets.vim'
 Plug 'johngrib/vim-game-code-break'
 Plug 'machakann/vim-highlightedyank'
