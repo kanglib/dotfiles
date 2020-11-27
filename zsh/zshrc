@@ -2,7 +2,7 @@ stty -ixon
 
 if [[ -n $(command -v tmux) && -z $TMUX ]]; then
     cd
-    tmux -2 new -As 0
+    tmux new -As 0
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.

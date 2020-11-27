@@ -130,7 +130,7 @@ Plug 'tpope/vim-fugitive'
 " Language support
 let g:python_highlight_all = 0
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['markdown']
+let g:polyglot_disabled = ['lifelines', 'markdown']
 " Too much
 let g:python_highlight_builtins = 0
 let g:python_highlight_exceptions = 0
@@ -285,6 +285,7 @@ Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
 call plug#end()
 
 silent! colorscheme Tomorrow-Night
+let g:limelight_conceal_ctermfg = 'DarkGray'
 " Workaround for microsoft/terminal#832
 hi Normal ctermfg=NONE ctermbg=NONE
 hi clear SpellBad
