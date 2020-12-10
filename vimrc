@@ -130,7 +130,7 @@ Plug 'tpope/vim-fugitive'
 " Language support
 let g:python_highlight_all = 0
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['lifelines', 'markdown']
+let g:polyglot_disabled = ['lifelines', 'markdown', 'plaintex']
 " Too much
 let g:python_highlight_builtins = 0
 let g:python_highlight_exceptions = 0
@@ -244,10 +244,6 @@ set ttimeoutlen=10
 " More plugins...
 Plug 'Valloric/ListToggle'
 Plug 'calebsmith/vim-lambdify'
-Plug 'dciccale/guizoom.vim'
-nmap + :ZoomIn<CR>
-nmap - :ZoomOut<CR>
-nmap <Leader>= :ZoomReset<CR>
 Plug 'dkarter/bullets.vim'
 Plug 'johngrib/vim-game-code-break'
 Plug 'machakann/vim-highlightedyank'
@@ -257,6 +253,10 @@ Plug 'tpope/vim-sleuth'
 Plug 'yous/PreserveNoEOL'
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
+Plug 'dciccale/guizoom.vim'
+nmap + :ZoomIn<CR>
+nmap - :ZoomOut<CR>
+nmap <Leader>= :ZoomReset<CR>
 Plug 'fidian/hexmode'
 let g:hexmode_xxd_options = '-g 1 -u'
 Plug 'junegunn/limelight.vim'
@@ -269,8 +269,8 @@ omap a, <Plug>(swap-textobject-a)
 omap i, <Plug>(swap-textobject-i)
 xmap a, <Plug>(swap-textobject-a)
 xmap i, <Plug>(swap-textobject-i)
-Plug 'simnalamburt/vim-mundo'
-nnoremap <silent> <F2> :MundoToggle<CR>
+Plug 'mbbill/undotree'
+nnoremap <silent> <F2> :UndotreeToggle<CR>
 Plug 'tmsvg/pear-tree'
 let g:pear_tree_repeatable_expand = 0
 let g:pear_tree_smart_backspace = 1

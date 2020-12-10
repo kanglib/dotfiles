@@ -31,7 +31,7 @@ if (Get-Command -ea SilentlyContinue gvim) {
 
     # Why bother i386?
     $pattern = [regex]"https://[\w./-]+windows_amd64\.zip"
-    $json = curl https://api.github.com/repos/junegunn/fzf-bin/releases/latest
+    $json = curl https://api.github.com/repos/junegunn/fzf/releases/latest
     $temp = "$env:TEMP\fzf.zip"
     curl $pattern.Match($json).Value -OutFile $temp
     Expand-Archive -f -Path $temp -DestinationPath ~\.local\share\fzf\bin
