@@ -57,8 +57,8 @@ inoremap <C-U> <C-G>u<C-U>
 map Y y$
 augroup vimrc
   autocmd!
-  autocmd FileType help,vim          setl keywordprg=:help
-  autocmd FileType markdown,tex,text setl spell textwidth=80
+  autocmd FileType help,vim                   setl keywordprg=:help
+  autocmd FileType markdown,plaintex,tex,text setl spell textwidth=80
 augroup END
 if s:is_win
   set columns=132 lines=43
@@ -130,7 +130,7 @@ Plug 'tpope/vim-fugitive'
 " Language support
 let g:python_highlight_all = 0
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['lifelines', 'markdown', 'plaintex']
+let g:polyglot_disabled = ['lifelines', 'markdown']
 " Too much
 let g:python_highlight_builtins = 0
 let g:python_highlight_exceptions = 0
@@ -244,7 +244,6 @@ set ttimeoutlen=10
 " More plugins...
 Plug 'Valloric/ListToggle'
 Plug 'calebsmith/vim-lambdify'
-Plug 'dkarter/bullets.vim'
 Plug 'johngrib/vim-game-code-break'
 Plug 'machakann/vim-highlightedyank'
 Plug 'nacitar/a.vim'
