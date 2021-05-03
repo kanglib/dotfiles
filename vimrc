@@ -249,13 +249,14 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'nacitar/a.vim'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-sleuth'
+Plug 'wellle/context.vim'
 Plug 'yous/PreserveNoEOL'
 Plug 'airblade/vim-rooter'
 let g:rooter_silent_chdir = 1
 Plug 'dciccale/guizoom.vim'
-nmap + :ZoomIn<CR>
-nmap - :ZoomOut<CR>
-nmap <Leader>= :ZoomReset<CR>
+nmap <silent> + :ZoomIn<CR>
+nmap <silent> - :ZoomOut<CR>
+nmap <silent> <Leader>= :ZoomReset<CR>
 Plug 'fidian/hexmode'
 let g:hexmode_xxd_options = '-g 1 -u'
 Plug 'junegunn/limelight.vim'

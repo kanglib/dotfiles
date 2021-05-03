@@ -38,7 +38,7 @@ inst pip ~/.config/pip
 
 if [[ -n $(command -v gdb) ]]; then
     info gdbinit
-    curl -fsL git.io/JfBXG | sh
+    curl -fsL git.io/JfBXG | bash
 fi
 
 if [[ -n $(command -v tmux) ]]; then
@@ -79,10 +79,9 @@ if [[ -n $(command -v zsh) ]]; then
     if [[ $(uname -m) == x86_64 ]]; then
         [[ $TMPDIR ]] || TMPDIR="$(mktemp -d)"
         URL=$(curl -fs https://api.github.com/repos/ogham/exa/releases/latest \
-            | grep -Eo "https://[[:alnum:]_./-]+linux-x86_64[0-9.-]+\.zip")
+            | grep -Eo "https://[[:alnum:]_./-]+linux-x86_64-v[0-9.]+\.zip")
         curl -fsLo "$TMPDIR"/exa.zip "$URL"
-        unzip "$TMPDIR"/exa.zip -d ~/.local/bin >/dev/null
-        mv -f ~/.local/bin/exa-* ~/.local/bin/exa
+        unzip -uo "$TMPDIR"/exa.zip -d ~/.local >/dev/null
     fi
 fi
 
