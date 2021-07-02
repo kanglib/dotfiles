@@ -12,17 +12,14 @@
     ([base16 version](https://github.com/chriskempson/base16#scheme-repositories))
 * Clang ([Windows](http://releases.llvm.org/download.html))
 * [Exuberant Ctags](http://ctags.sourceforge.net/)
-* [Python](https://www.python.org/downloads/) (3.6 recommended)
+* [Python](https://www.python.org/downloads/) (3.6+ recommended)
 * [D2Coding](https://github.com/naver/d2codingfont/releases/latest) 1.3+
     (recommended)
 * `PATH` variable is set correctly
 
 ## Installation
 
-    sudo apt install gdb tmux zsh unzip vim exuberant-ctags
-    # Install Jedi for versions you want
-    sudo pip2 install jedi
-    sudo pip3 install jedi pynvim
+    sudo apt install gdb tmux zsh unzip vim exuberant-ctags python3-venv
     ./install
     # (Re)start Zsh
 
@@ -35,9 +32,9 @@ Python prompts are colorized on POSIX systems.
 
 ## vimrc
 ### Clang on Windows
-I use Clang as the default C/C++ compiler. Modify the F5 key bindings if you
-want MSVC/GCC or another.
+I use Clang as the default C/C++ compiler. Modify the <kbd>F5</kbd> bindings if
+you want MSVC/GCC or another.
 
-### [NCM2](https://github.com/ncm2/ncm2)
-On Windows with both Python 2/3, copy or link the 3's executable to
-`python3.exe`; otherwise nvim-yarp will refuse to work.
+### Language Server Protocol
+The LSP is supported via [vim-lsp](https://github.com/prabirshrestha/vim-lsp).
+<kbd>F7</kbd> can be used to install or update the suggested language server.

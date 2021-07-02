@@ -45,8 +45,7 @@ set mouse=a
 set nofoldenable
 set number
 set regexpengine=1
-set shortmess+=a
-set shortmess-=S
+set shortmess+=ac
 set spelllang+=cjk
 set splitright
 set sw=4 sts=-1 et
@@ -71,35 +70,67 @@ else
   set directory=/tmp
 endif
 
-" NCM2
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-let g:ncm2#matcher = 'substrfuzzy'
-set completeopt=noinsert,menuone,noselect
-set shortmess+=c
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" Language Server Protocol
+Plug 'prabirshrestha/vim-lsp'
+function! s:on_lsp_buffer_enabled() abort
+  let g:lsp_diagnostics_enabled = 0
+  let g:lsp_fold_enabled = 0            " TODO
+  let g:lsp_format_sync_timeout = 1000
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+  inoremap <buffer> <expr><c-f> lsp#scroll(+4)
+  inoremap <buffer> <expr><c-d> lsp#scroll(-4)
+  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+endfunction
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+Plug 'mattn/vim-lsp-settings'
+let g:lsp_settings_enable_suggestions = 0
+let g:lsp_settings_servers_dir = '~/.vim/servers'
+nnoremap <F7> :LspInstallServer<CR>
+
+" asyncomplete
+Plug 'prabirshrestha/asyncomplete.vim'
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-autocmd BufEnter * call ncm2#enable_for_buffer()
-Plug 'fgrsnau/ncm2-otherbuf'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-cssomni'
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-jedi'
-nnoremap <Leader>j2 :let g:ncm2_jedi#python_version = 2<CR>
-nnoremap <Leader>j3 :let g:ncm2_jedi#python_version = 3<CR>
-Plug 'ncm2/ncm2-markdown-subscope'
-Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-pyclang'
-let g:ncm2_pyclang#detect_sys_inc_args = 0
-autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-Plug 'ncm2/ncm2-ultisnips'
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+Plug 'prabirshrestha/asyncomplete-file.vim'
+autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+      \ 'name': 'file',
+      \ 'allowlist': ['*'],
+      \ 'completor': function('asyncomplete#sources#file#completor')
+      \ }))
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-necovim.vim' | Plug 'Shougo/neco-vim'
+autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necovim#get_source_options({
+      \ 'name': 'necovim',
+      \ 'allowlist': ['vim'],
+      \ 'completor': function('asyncomplete#sources#necovim#completor'),
+      \ }))
+Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+      \ 'name': 'ultisnips',
+      \ 'allowlist': ['*'],
+      \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+      \ }))
+Plug 'wellle/tmux-complete.vim' | Plug 'prabirshrestha/async.vim'
+let g:tmuxcomplete#trigger = ''
 
 " UltiSnips
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger = '<C-E>'
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " ALE
