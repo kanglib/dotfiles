@@ -1,0 +1,7 @@
+#!/bin/bash
+
+{{ if lookPath "zsh" -}}
+antibody bundle \
+    <{{ joinPath .chezmoi.sourceDir "zsh_plugins.txt" | quote }} \
+    >~/.config/zsh/plugins.zsh
+{{- end }}
