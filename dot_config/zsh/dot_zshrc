@@ -28,8 +28,8 @@ bindkey "\e[4~" end-of-line
 bindkey "\e[5~" beginning-of-history
 bindkey "\e[6~" end-of-history
 
+export HISTFILE=$ZDOTDIR/history
 export ZSH_CACHE_DIR=(~/.cache/antibody/*-ohmyzsh/cache)
-HISTFILE=$ZDOTDIR/history
 export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES=vi
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta'
@@ -62,7 +62,7 @@ else
 fi
 
 if (( $+commands[eza] )); then
-    alias l="LANG=C.UTF-8 eza -l --group-directories-first"
+    alias l="LANG=C.UTF-8 eza -lg --group-directories-first"
     alias la="l -a"
     alias lr="l -T"
     alias lt="l -smod"

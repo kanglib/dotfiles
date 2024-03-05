@@ -31,11 +31,10 @@ sudo pacman -S bat eza fd git-delta ripgrep
 sudo pacman -S python-virtualenvwrapper
 
 # Fedora
-sudo dnf install cmake git vim-X11 vim-enhanced tmux zsh redhat-lsb-core
+sudo dnf install cmake git lua vim-X11 vim-enhanced tmux zsh redhat-lsb-core gcc-c++ sqlite
 sudo dnf install ctags gdb
-sudo dnf install bat exa fd-find git-delta ripgrep
+sudo dnf install bat eza fd-find git-delta ripgrep
 sudo dnf install python3-virtualenvwrapper
-ln -s $(which exa) ~/.local/bin/eza
 
 # Ubuntu 18.04
 sudo add-apt-repository ppa:jonathonf/vim
