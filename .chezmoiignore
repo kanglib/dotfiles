@@ -3,6 +3,10 @@
 README.md
 zsh_plugins.txt
 
+{{ if not (lookPath "alacritty") }}
+.config/alacritty
+{{ end }}
+
 {{ if not (lookPath "gdb") }}
 .config/gdb
 {{ end }}
