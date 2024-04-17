@@ -73,7 +73,6 @@ if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_LEFT_STATUS_SEGMENTS=(
 		"hostname 27 255" \
 		"uptime 45 18" \
-		"battery 156 23" \
 		"my-mode_indicator 159 27" \
 	)
 fi

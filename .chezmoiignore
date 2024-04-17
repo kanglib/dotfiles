@@ -3,8 +3,22 @@
 README.md
 zsh_plugins.txt
 
+.config/fzf
+.config/zsh/.zcompdump
+.config/zsh/history
+.config/zsh/plugins.zsh
+
+{{ if not (lookPath "alacritty") }}
+.config/alacritty.toml
+{{ end }}
+
 {{ if not (lookPath "gdb") }}
 .config/gdb
+{{ end }}
+
+{{ if not (lookPath "kime") }}
+.config/environment.d
+.config/kime
 {{ end }}
 
 {{ if not (lookPath "pip") }}

@@ -4,8 +4,8 @@
 
 ## Supported systems
 
-- Arch/Fedora/Ubuntu x86-64 (WSL supported)
-- Windows Terminal and Alacritty
+- Arch/Red Hat/Ubuntu x86-64 (WSL supported)
+- Windows Terminal/Alacritty
 - GVim ([vim-tux](https://tuxproject.de/projects/vim) or
   [vim-win32-installer](https://github.com/vim/vim-win32-installer/releases))
   on Windows 10+
@@ -25,25 +25,26 @@
 
 ```sh
 # Arch
-sudo pacman -S cmake git gvim tmux zsh lsb-release
-sudo pacman -S ctags gdb
-sudo pacman -S bat eza fd git-delta ripgrep
-sudo pacman -S python-virtualenvwrapper
+sudo pacman -S bat eza fd git gvim ripgrep tmux zsh
+sudo pacman -S cmake python-virtualenvwrapper git-delta
+sudo pacman -S inetutils lsb-release lua perl-term-readkey
+sudo pacman -S ctags
 
-# Fedora
-sudo dnf install cmake git vim-X11 vim-enhanced tmux zsh redhat-lsb-core
-sudo dnf install ctags gdb
-sudo dnf install bat exa fd-find git-delta ripgrep
-sudo dnf install python3-virtualenvwrapper
+# Red Hat
+sudo dnf install bat eza fd-find git vim-X11 ripgrep tmux zsh
+sudo dnf install cmake python3-virtualenvwrapper git-delta vim-enhanced
+sudo dnf install gcc-c++ lua redhat-lsb-core sqlite
+sudo dnf install ctags
+
+# Ubuntu 22.04
+sudo apt install bat exa fd-find git vim-gtk3 ripgrep tmux zsh
+sudo apt install cmake virtualenvwrapper vim
+sudo apt install ctags
+ln -s $(which batcat) ~/.local/bin/bat
 ln -s $(which exa) ~/.local/bin/eza
-
-# Ubuntu 18.04
-sudo add-apt-repository ppa:jonathonf/vim
-sudo apt install cmake git vim vim-gtk3 tmux zsh
-sudo apt install ctags gdb
+ln -s $(which fdfind) ~/.local/bin/fd
 ...
-cargo install bat eza fd-find git-delta ripgrep
-pip install virtualenvwrapper
+cargo install git-delta
 
 # Pick one
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply kanglib

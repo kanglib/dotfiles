@@ -1,4 +1,4 @@
-export LESSHISTFILE=-
+export LESSHISTFILE=/dev/null
 export ZDOTDIR=~/.config/zsh
 typeset -U path
 path=(~/.local/bin $path)
