@@ -16,11 +16,6 @@ zsh_plugins.txt
 .config/gdb
 {{ end }}
 
-{{ if not (lookPath "kime") }}
-.config/environment.d
-.config/kime
-{{ end }}
-
 {{ if not (lookPath "pip") }}
 .config/pip
 AppData
