@@ -278,8 +278,6 @@ Plug 'dciccale/guizoom.vim'
 nmap <silent> + :ZoomIn<CR>
 nmap <silent> - :ZoomOut<CR>
 nmap <silent> <Leader>= :ZoomReset<CR>
-Plug 'fidian/hexmode'
-let g:hexmode_xxd_options = '-g 1 -u'
 Plug 'junegunn/limelight.vim'
 nnoremap <silent> <F6> :Limelight!!<CR>
 Plug 'junegunn/vim-easy-align'

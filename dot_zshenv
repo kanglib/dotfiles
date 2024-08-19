@@ -1,7 +1,8 @@
-export LESSHISTFILE=-
+export LESSHISTFILE=/dev/null
 export ZDOTDIR=~/.config/zsh
+
 typeset -U path
-path=(~/.local/bin $path)
+path[1,0]=~/.local/bin
 
 if (( $+commands[bat] )); then
     export BAT_PAGER='less -FR --mouse'
@@ -9,9 +10,9 @@ if (( $+commands[bat] )); then
 fi
 
 if (( $+commands[tmux] )); then
-    path=(~/.tmux/plugins/tmux-mem-cpu-load $path)
+    path[1,0]=~/.tmux/plugins/tmux-mem-cpu-load
 fi
 
 if [[ -d ~/.cargo/bin ]]; then
-    path=(~/.cargo/bin $path)
+    path[1,0]=~/.cargo/bin
 fi

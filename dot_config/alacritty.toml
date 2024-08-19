@@ -1,0 +1,33 @@
+ipc_socket = false
+
+[colors.bright]
+black = "#969896"
+blue = "#b4b7b4"
+cyan = "#a3685a"
+green = "#282a2e"
+magenta = "#e0e0e0"
+red = "#de935f"
+white = "#ffffff"
+yellow = "#373b41"
+
+[colors.selection]
+background = "#373b41"
+
+[debug]
+log_level = "Off"
+
+[env]
+TERM = "xterm-256color"
+
+[font.normal]
+family = "D2Coding"
+
+[mouse]
+hide_when_typing = true
+
+[window]
+dynamic_padding = true
+
+[window.dimensions]
+columns = 143
+lines = 43
