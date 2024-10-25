@@ -40,3 +40,10 @@ vimfiles
 {{ else }}
 .chezmoiscripts/*.cmd
 {{ end }}
+
+.config/.gsd-keyboard.settings-ported
+.config/BraveSoftware
+.config/Mattermost
+.config/Slack
+.config/discord
+.config/pulse
