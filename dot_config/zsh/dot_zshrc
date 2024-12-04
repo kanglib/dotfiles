@@ -1,8 +1,7 @@
 stty -ixon
 umask 077
 
-if [[ (( $+commands[tmux] )) && -z $TMUX ]]; then
-    pppid=$(ps -p $PPID -o ppid:1=)
+if [[ -z $TMUX && (( $+commands[tmux] )) ]]; then
     if [[ $(<"/proc/$pppid/comm") != nautilus ]]; then
         exec tmux new -As main
     fi
