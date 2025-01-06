@@ -80,7 +80,7 @@ else
     silent! call mkdir(expand(&g:directory), 'p', 0700)
   endif
   if has('gui_running')
-    set guifont=D2Coding\ 10
+    set guifont=D2Coding\ 11
   endif
 endif
 
