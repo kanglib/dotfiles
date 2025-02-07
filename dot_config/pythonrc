@@ -1,10 +1,8 @@
 import os
+import random
 import sys
 from pprint import pprint
 
 if os.name == "posix":
-    import readline
-
-    readline.write_history_file = lambda _: None
     sys.ps1 = "\033[36m>>>\033[m "
     sys.ps2 = "\033[33m...\033[m "
