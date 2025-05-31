@@ -80,7 +80,7 @@ else
     silent! call mkdir(expand(&g:directory), 'p', 0700)
   endif
   if has('gui_running')
-    set guifont=D2Coding\ 10
+    set guifont=D2Coding\ 11
   endif
 endif
 
@@ -166,8 +166,6 @@ let g:ale_fixers = {
 let g:ale_linters_ignore = ['clangcheck']
 let g:ale_powershell_psscriptanalyzer_executable = 'powershell'
 let g:ale_python_isort_options = '--profile black --gitignore'
-let g:ale_python_pylint_options =
-      \ '-d invalid-name,missing-function-docstring,missing-module-docstring'
 let g:ale_sh_shfmt_options = '-s -i 4'
 let g:ale_virtualtext_cursor = 'disabled'
 nmap <silent> [a <Plug>(ale_previous_wrap)

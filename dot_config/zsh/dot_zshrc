@@ -1,8 +1,11 @@
 stty -ixon
 umask 077
 
-if [[ (( $+commands[tmux] )) && -z $TMUX ]]; then
-    exec tmux new -As main
+if [[ -z $TMUX && (( $+commands[tmux] )) ]]; then
+    pppid=$(ps -p $PPID -o ppid:1=)
+    if [[ $(<"/proc/$pppid/comm") != nautilus ]]; then
+        tmux new -As main && exit
+    fi
 fi
 
 ZLE_RPROMPT_INDENT=0
@@ -36,7 +39,7 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta'
 ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=green'
 ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
-source "$ZDOTDIR"/plugins.zsh
+source "$ZDOTDIR/plugins.zsh"
 
 alias -g ...=../..
 alias -g ....=../../..
@@ -101,4 +104,4 @@ fi
 
 [ -f ~/.config/fzf/fzf.zsh ] && source ~/.config/fzf/fzf.zsh
 source ~/.local/share/lscolors.sh
-source "$ZDOTDIR"/p10k.zsh
+source "$ZDOTDIR/p10k.zsh"
