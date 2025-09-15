@@ -9,7 +9,6 @@ ohmyzsh/ohmyzsh path:plugins/isodate
 ohmyzsh/ohmyzsh path:plugins/jsontools
 ohmyzsh/ohmyzsh path:plugins/man
 ohmyzsh/ohmyzsh path:plugins/python
-ohmyzsh/ohmyzsh path:plugins/ssh-agent
 ohmyzsh/ohmyzsh path:plugins/sudo
 ohmyzsh/ohmyzsh path:plugins/systemadmin
 ohmyzsh/ohmyzsh path:plugins/systemd

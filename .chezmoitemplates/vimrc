@@ -207,12 +207,14 @@ augroup vimrc
   autocmd FileType markdown setlocal conceallevel=2
   autocmd FileType tex      highlight clear Conceal
 augroup END
+Plug 'imsnif/kdl.vim'
 Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'vim-scripts/python_match.vim'
 
 " Tagging
 nnoremap <C-]> :exe 'tjump ' . expand('<cword>')<CR>
 Plug 'preservim/tagbar', {'on': 'TagbarToggle'}
+let g:tagbar_sort = 0
 nnoremap <silent> <F3> :TagbarToggle<CR>
 if executable('ctags')
   Plug 'ludovicchabant/vim-gutentags'
@@ -264,6 +266,7 @@ Plug 'Valloric/ListToggle'
 Plug 'markonm/traces.vim'
 Plug 'nacitar/a.vim'
 Plug 'rhysd/conflict-marker.vim'
+Plug 'rhysd/vim-healthcheck'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-endwise'
 Plug 'vim-scripts/PreserveNoEOL'

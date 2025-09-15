@@ -12,6 +12,10 @@
 # Auto-generated tag files
 tags
 
+# clangd
 .clangd/
+compile_commands.events.json
+compile_commands.json
+
 .notags
 __pycache__/
