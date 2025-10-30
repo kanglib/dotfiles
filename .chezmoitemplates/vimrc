@@ -207,6 +207,7 @@ augroup vimrc
   autocmd FileType markdown setlocal conceallevel=2
   autocmd FileType tex      highlight clear Conceal
 augroup END
+Plug 'imsnif/kdl.vim'
 Plug 'jeetsukumaran/vim-pythonsense'
 Plug 'vim-scripts/python_match.vim'
 
