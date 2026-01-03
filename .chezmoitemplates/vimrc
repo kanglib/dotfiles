@@ -156,10 +156,12 @@ let s:default_fixers = ['remove_trailing_lines', 'trim_whitespace']
 let g:ale_fixers = {
       \ '*':          s:default_fixers,
       \ 'dockerfile': s:default_fixers + ['dprint'],
+      \ 'fish':       s:default_fixers + ['fish_indent'],
       \ 'javascript': s:default_fixers + ['dprint'],
       \ 'json':       s:default_fixers + ['dprint'],
       \ 'markdown':   ['remove_trailing_lines', 'dprint'],
       \ 'python':     s:default_fixers + ['black', 'isort'],
+      \ 'rust':       s:default_fixers + ['rustfmt'],
       \ 'sh':         s:default_fixers + ['shfmt'],
       \ 'toml':       s:default_fixers + ['dprint'],
       \ }

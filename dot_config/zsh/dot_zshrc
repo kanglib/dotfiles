@@ -47,6 +47,7 @@ alias -g .....=../../../..
 alias -g ......=../../../../..
 alias gdb="gdb -q"
 alias latexmk="latexmk -pdf -halt-on-error -interaction=nonstopmode"
+alias mkdir="mkdir -p"
 alias pk="pkill -9 -t"
 alias rm="rm -I"
 alias t="tail -f"
@@ -92,10 +93,6 @@ if (( $+commands[vim] )); then
     alias vi=vim
     export EDITOR=vim
     export VISUAL=vim
-fi
-
-if (( $+commands[hub] )); then
-    alias git=hub
 fi
 
 if (( $+commands[pkgfile] )); then
