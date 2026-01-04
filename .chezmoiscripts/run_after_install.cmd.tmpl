@@ -1,13 +1,9 @@
 @echo off
 
+setx BAT_THEME base16
+setx FZF_DEFAULT_COMMAND "rg -. -g !.git --files"
 setx HOME "%USERPROFILE%"
+setx LESS "-FKR --mouse"
 setx LESSHISTFILE -
-setx PYTHONSTARTUP "%HOME%\.config\pythonrc"
 
-{{ if lookPath "gvim" -}}
 gvim +PlugClean! +PlugUpdate +qa
-setx FZF_DEFAULT_OPTS "--bind=ctrl-a:select-all,ctrl-d:deselect-all --height=40%"
-{{ if lookPath "rg" -}}
-setx FZF_DEFAULT_COMMAND "rg -.g!.git --files"
-{{ end -}}
-{{ end -}}
