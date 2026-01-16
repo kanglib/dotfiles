@@ -36,7 +36,6 @@ vimfiles
 
 {{ if eq .chezmoi.os "windows" }}
 .chezmoiscripts/*.sh
-.config/pythonrc
 .hushlogin
 {{ else }}
 .chezmoiscripts/*.cmd

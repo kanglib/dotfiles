@@ -55,10 +55,6 @@ chsh -s /bin/zsh
 exec zsh
 ```
 
-## pythonrc
-
-Python prompts are colorized on POSIX systems.
-
 ## vimrc
 
 ### Language Server Protocol

@@ -53,7 +53,6 @@ alias rm="rm -I"
 alias t="tail -f"
 
 export FZF_DEFAULT_OPTS='--bind=ctrl-a:select-all,ctrl-d:deselect-all --height=40%'
-export PYTHONSTARTUP=~/.config/pythonrc
 export TIME_STYLE=long-iso
 KEYTIMEOUT=1
 
