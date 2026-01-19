@@ -1,0 +1,6 @@
+.git/
+
+.cache/antibody/
+.cache/tealdeer/
+.cache/tldr/
+.vim/

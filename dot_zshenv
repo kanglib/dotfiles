@@ -6,7 +6,6 @@ path[1,0]=~/.local/bin
 
 if (( $+commands[bat] )); then
     export BAT_PAGER='less -FR --mouse'
-    export BAT_THEME=base16
 fi
 
 if (( $+commands[tmux] )); then

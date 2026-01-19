@@ -1,0 +1,13 @@
+[colors.selection]
+background = "#373b41"
+
+[general]
+import = ["tomorrow_night.toml"]
+ipc_socket = false
+
+[mouse]
+hide_when_typing = true
+
+[window]
+dimensions = { columns = 143, lines = 43 }
+dynamic_padding = true

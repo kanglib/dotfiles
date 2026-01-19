@@ -1,6 +1,14 @@
 README.md
 zsh_plugins.txt
 
+{{ if not (lookPath "alacritty") }}
+.config/alacritty
+{{ end }}
+
+{{ if not (lookPath "fd") }}
+.config/fd
+{{ end }}
+
 {{ if not (lookPath "gdb") }}
 .config/gdb
 {{ end }}
@@ -17,6 +25,7 @@ zsh_plugins.txt
 
 {{ if eq .chezmoi.os "windows" }}
 .chezmoiscripts/*.sh
+.hushlogin
 .vim
 {{ else }}
 .chezmoiscripts/*.cmd

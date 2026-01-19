@@ -1,3 +1,4 @@
+.config/alacritty.toml
 .config/git/attributes
 .config/pip
 .config/pythonrc

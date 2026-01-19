@@ -1,3 +1,9 @@
+{{ if lookPath "alacritty" }}
+[".config/alacritty/tomorrow_night.toml"]
+type = "file"
+url = "https://github.com/alacritty/alacritty-theme/raw/refs/heads/master/themes/tomorrow_night.toml"
+{{ end }}
+
 {{ if lookPath "gdb" }}
 [".config/gdb/gef.py"]
 type = "file"
