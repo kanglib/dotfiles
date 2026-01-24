@@ -1,0 +1,24 @@
+README.md
+zsh_plugins.txt
+
+{{ if not (lookPath "gdb") }}
+.config/gdb
+{{ end }}
+
+{{ if not (lookPath "tmux") }}
+.config/tmux-powerline
+.tmux.conf
+{{ end }}
+
+{{ if not (lookPath "zsh") }}
+.config/zsh
+.zshenv
+{{ end }}
+
+{{ if eq .chezmoi.os "windows" }}
+.chezmoiscripts/*.sh
+.vim
+{{ else }}
+.chezmoiscripts/*.cmd
+vimfiles
+{{ end }}

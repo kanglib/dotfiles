@@ -1,0 +1,102 @@
+stty -ixon
+umask 077
+
+if [[ -z $TMUX && (( $+commands[tmux] )) ]]; then
+    pppid=$(ps -p $PPID -o ppid:1=)
+    if [[ $(<"/proc/$pppid/comm") != nautilus ]]; then
+        tmux new -As main && exit
+    fi
+fi
+
+ZLE_RPROMPT_INDENT=0
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+autoload -Uz compinit && compinit
+setopt glob_dots
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt no_bg_nice
+
+bindkey -e
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+bindkey "\e[5~" beginning-of-history
+bindkey "\e[6~" end-of-history
+
+export HISTFILE=$ZDOTDIR/history
+export ZSH_CACHE_DIR=(~/.cache/antibody/*-ohmyzsh/cache)
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=green'
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+source "$ZDOTDIR/plugins.zsh"
+
+alias -g ...=../..
+alias -g ....=../../..
+alias -g .....=../../../..
+alias -g ......=../../../../..
+alias gdb="gdb -q"
+alias latexmk="latexmk -pdf -halt-on-error -interaction=nonstopmode"
+alias mkdir="mkdir -p"
+alias pk="pkill -9 -t"
+alias rm="rm -I"
+alias t="tail -f"
+
+export FZF_DEFAULT_OPTS='--bind=ctrl-a:select-all,ctrl-d:deselect-all --height=40%'
+export TIME_STYLE=long-iso
+KEYTIMEOUT=1
+
+if (( $+commands[bat] )); then
+    alias cat=bat
+    alias preview="fzf --preview='bat --color always {}'"
+else
+    alias preview="fzf --preview='cat {}'"
+fi
+
+if (( $+commands[eza] )); then
+    alias l="LANG=C.UTF-8 eza -lg --group-directories-first"
+    alias la="l -a"
+    alias lr="l -T"
+    alias lt="l -smod"
+    alias lw="l -G"
+    alias lar="la -T"
+    alias lat="la -smod"
+else
+    alias l="LANG=C.UTF-8 ls -hl --color"
+    alias la="l -A"
+    alias lr="l -R"
+    alias lt="l -tr"
+    alias lar="la -R"
+    alias lat="la -tr"
+fi
+
+if (( $+commands[fd] )); then
+    export FZF_DEFAULT_COMMAND='fd -HE.git --strip-cwd-prefix -tf'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+if (( $+commands[gvim] )); then
+    alias vim="gvim -v"
+fi
+if (( $+commands[vim] )); then
+    alias vi=vim
+    export EDITOR=vim
+    export VISUAL=vim
+fi
+
+if (( $+commands[pkgfile] )); then
+    source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
+
+[ -f ~/.config/fzf/fzf.zsh ] && source ~/.config/fzf/fzf.zsh
+source ~/.local/share/lscolors.sh
+source "$ZDOTDIR/p10k.zsh"

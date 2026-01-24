@@ -1,0 +1,21 @@
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
+tags
+
+# clangd
+.clangd/
+compile_commands.events.json
+compile_commands.json
+
+.notags
+__pycache__/

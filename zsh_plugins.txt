@@ -1,0 +1,22 @@
+yous/vanilli.sh
+
+ohmyzsh/ohmyzsh path:plugins/command-not-found
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/fancy-ctrl-z
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/python
+ohmyzsh/ohmyzsh path:plugins/sudo
+ohmyzsh/ohmyzsh path:plugins/systemd
+ohmyzsh/ohmyzsh path:plugins/z
+
+ohmyzsh/ohmyzsh path:plugins/dnf
+ohmyzsh/ohmyzsh path:plugins/ubuntu
+
+caarlos0/zsh-mkc
+mafredri/zsh-async
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+
+# See https://github.com/caarlos0/dotfiles/blob/master/antibody/bundles.txt
+romkatv/powerlevel10k
+zsh-users/zsh-syntax-highlighting

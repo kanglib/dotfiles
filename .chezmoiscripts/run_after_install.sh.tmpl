@@ -1,0 +1,27 @@
+#!/bin/bash
+
+{{ if lookPath "tmux" -}}
+pushd ~/.tmux/plugins/tpm/bin
+./clean_plugins
+./install_plugins
+./update_plugins all
+popd
+{{- end }}
+
+{{ if lookPath "zsh" -}}
+antibody bundle \
+    <{{ joinPath .chezmoi.sourceDir "zsh_plugins.txt" | quote }} \
+    >~/.config/zsh/plugins.zsh
+{{- end }}
+
+{{- $vim := "" }}
+{{- if lookPath "gvim" }}
+{{- $vim = "gvim -v" }}
+{{- else if lookPath "vim" }}
+{{- $vim = "vim" }}
+{{- end }}
+
+{{ if $vim -}}
+{{ $vim }} +PlugClean! +PlugUpdate +qa
+~/.vim/plugged/fzf/install --all --xdg --no-update-rc --no-bash --no-fish
+{{ end -}}

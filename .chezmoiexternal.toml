@@ -1,0 +1,30 @@
+{{ if lookPath "gdb" }}
+[".config/gdb/gef.py"]
+type = "file"
+url = "https://github.com/hugsy/gef/raw/refs/heads/main/gef.py"
+{{ end }}
+
+{{ if lookPath "tmux" }}
+[".tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm.git"
+{{ end }}
+
+{{ if lookPath "zsh" }}
+[".local/bin/antibody"]
+type = "archive-file"
+url = "https://github.com/getantibody/antibody/releases/latest/download/antibody_Linux_x86_64.tar.gz"
+path = "antibody"
+
+[".local/share/lscolors.sh"]
+type = "file"
+url = "https://github.com/trapd00r/LS_COLORS/raw/refs/heads/master/lscolors.sh"
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+[".vim/autoload/plug.vim"]
+{{ else }}
+["vimfiles/autoload/plug.vim"]
+{{ end }}
+type = "file"
+url = "https://github.com/junegunn/vim-plug/raw/refs/heads/master/plug.vim"

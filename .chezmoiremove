@@ -1,0 +1,5 @@
+.config/git/attributes
+.config/pip
+.config/pythonrc
+.pylintrc
+AppData/Roaming/pip

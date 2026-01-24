@@ -1,0 +1,376 @@
+set encoding=utf-8
+if v:version < 801 || !has('python3')
+  echoerr 'Vim 8.1+ with Python 3 support required'
+endif
+source $VIMRUNTIME/defaults.vim
+
+" Windows-Unix compatibility
+let s:is_win = has('win16') || has('win32') || has('win64')
+source $VIMRUNTIME/mswin.vim
+behave xterm
+silent! unmap <C-F>
+silent! unmap <C-H>
+silent! unmap <C-Y>
+silent! unmap! <C-F>
+silent! unmap! <C-H>
+silent! unmap! <C-Y>
+if s:is_win
+  let s:vim = '~/vimfiles'
+else
+  let s:vim = '~/.vim'
+  silent! nunmap <C-Z>
+endif
+
+call plug#begin(s:vim . '/plugged')
+
+" Not so sensible ;-)
+set viminfo=
+Plug 'tpope/vim-sensible'
+set display=uhex
+
+" More basic settings
+let c_gnu = 1
+let g:netrw_dirhistmax = 0
+let mapleader = ','
+set belloff=all
+set cinoptions=:0g0N-s(0
+set conceallevel=2
+set cursorline
+set eventignore=FocusLost
+set fileencodings=ucs-bom,utf-8,cp949,latin1
+set guioptions=a
+set hlsearch
+set ignorecase smartcase
+set linebreak
+set modeline
+set mouse=a
+set nofoldenable
+set number
+set shortmess+=ac
+set spelllang+=cjk
+set splitright
+set suffixes+=.aux,.bbl,.blg,.brf,.cb,.class,.dvi,.idx,.ilg,.ind,.inx,.jpg,.out
+set suffixes+=.png,.rar,.toc,.zip
+set suffixes-=.h
+set title
+set updatetime=100
+set wildignore+=*.tar.*z*,._*,.git
+inoremap <C-U> <C-G>u<C-U>
+map Y y$
+augroup vimrc
+  autocmd!
+  autocmd FileType gitcommit                  setlocal spell
+  autocmd FileType help,vim                   setlocal keywordprg=:help
+  autocmd FileType markdown,plaintex,tex,text setlocal spell textwidth=80
+augroup END
+if has('gui_running')
+  set columns=132 lines=43
+  set guioptions+=c
+else
+  set termguicolors
+endif
+if s:is_win
+  set directory=$TEMP//
+  set guifont=D2Coding:h10
+  set renderoptions=type:directx
+  set shell=cmd.exe
+else
+  set directory=~/.cache/vim/swap//
+  if !isdirectory(expand(&g:directory))
+    silent! call mkdir(expand(&g:directory), 'p', 0700)
+  endif
+  if has('gui_running')
+    set guifont=D2Coding\ 11
+  endif
+endif
+
+" Language Server Protocol
+Plug 'prabirshrestha/vim-lsp'
+let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_document_highlight_enabled = 0
+let g:lsp_fold_enabled = 0
+function! s:on_lsp_buffer_enabled() abort
+  let g:lsp_format_sync_timeout = 1000
+  setlocal omnifunc=lsp#complete
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+  nnoremap <buffer> <expr> <S-Down> lsp#scroll(+4)
+  nnoremap <buffer> <expr> <S-Up>   lsp#scroll(-4)
+  autocmd! BufWritePre *.rs call execute('LspDocumentFormatSync')
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+endfunction
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+Plug 'mattn/vim-lsp-settings'
+let g:lsp_settings_enable_suggestions = 0
+let g:lsp_settings_servers_dir = s:vim . '/servers'
+nnoremap <F7> :LspInstallServer<CR>
+
+" asyncomplete
+Plug 'prabirshrestha/asyncomplete.vim'
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+autocmd vimrc User asyncomplete_setup
+      \ call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+      \ 'name': 'ultisnips',
+      \ 'allowlist': ['*'],
+      \ 'completor': function('asyncomplete#sources#ultisnips#completor')
+      \ }))
+if !s:is_win
+  Plug 'prabirshrestha/asyncomplete-file.vim'
+  autocmd vimrc User asyncomplete_setup
+        \ call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+        \ 'name': 'file',
+        \ 'allowlist': ['*'],
+        \ 'completor': function('asyncomplete#sources#file#completor')
+        \ }))
+  if !has('gui_running')
+    Plug 'wellle/tmux-complete.vim' | Plug 'prabirshrestha/async.vim'
+    let g:tmuxcomplete#trigger = ''
+  endif
+endif
+
+" UltiSnips
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger = '<C-E>'
+let g:UltiSnipsRemoveSelectModeMappings = 0
+
+" ALE
+Plug 'dense-analysis/ale'
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let s:default_fixers = ['remove_trailing_lines', 'trim_whitespace']
+let g:ale_fixers = {
+      \ '*':          s:default_fixers,
+      \ 'dockerfile': s:default_fixers + ['dprint'],
+      \ 'fish':       s:default_fixers + ['fish_indent'],
+      \ 'javascript': s:default_fixers + ['dprint'],
+      \ 'json':       s:default_fixers + ['dprint'],
+      \ 'markdown':   ['remove_trailing_lines', 'dprint'],
+      \ 'python':     s:default_fixers + ['black', 'isort'],
+      \ 'rust':       s:default_fixers + ['rustfmt'],
+      \ 'sh':         s:default_fixers + ['shfmt'],
+      \ 'toml':       s:default_fixers + ['dprint'],
+      \ }
+let g:ale_linters_ignore = ['clangcheck']
+let g:ale_powershell_psscriptanalyzer_executable = 'powershell'
+let g:ale_python_isort_options = '--profile black --gitignore'
+let g:ale_sh_shfmt_options = '-s -i 4'
+let g:ale_virtualtext_cursor = 'disabled'
+nmap <silent> [a <Plug>(ale_previous_wrap)
+nmap <silent> ]a <Plug>(ale_next_wrap)
+" Without regexp
+nnoremap <F4> :ALEFix<CR>
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+Plug 'rhysd/vim-lsp-ale'
+
+" Git support
+Plug 'mhinz/vim-signify'
+let g:signify_cursorhold_insert = 0
+let g:signify_cursorhold_normal = 0
+let g:signify_realtime = 1
+let g:signify_skip = {'vcs': {'allow': ['git']}}
+let g:signify_update_on_bufenter = 0
+set signcolumn=yes
+omap ac <plug>(signify-motion-outer-pending)
+omap ic <plug>(signify-motion-inner-pending)
+xmap ac <plug>(signify-motion-outer-visual)
+xmap ic <plug>(signify-motion-inner-visual)
+Plug 'tpope/vim-fugitive'
+
+" Language support
+let g:python_highlight_all = 0
+set tabstop=4 expandtab
+Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['lifelines', 'markdown.plugin']
+" Too much
+let g:python_highlight_builtins = 0
+let g:python_highlight_exceptions = 0
+let g:python_highlight_operators = 0
+let g:python_highlight_space_errors = 0
+let g:python_highlight_file_headers_as_comments = 1
+let g:vim_json_syntax_conceal = 1
+augroup vimrc
+  " Set again
+  autocmd FileType markdown setlocal conceallevel=2
+  autocmd FileType tex      highlight clear Conceal
+augroup END
+Plug 'imsnif/kdl.vim'
+Plug 'jeetsukumaran/vim-pythonsense'
+Plug 'vim-scripts/python_match.vim'
+
+" Tagging
+nnoremap <C-]> :exe 'tjump ' . expand('<cword>')<CR>
+Plug 'preservim/tagbar', {'on': 'TagbarToggle'}
+let g:tagbar_sort = 0
+nnoremap <silent> <F3> :TagbarToggle<CR>
+if executable('ctags')
+  Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_add_default_project_roots = 0
+  let g:gutentags_project_root = ['.git', '*.sln', 'Makefile']
+endif
+
+" fzf
+Plug 'junegunn/fzf'
+let g:fzf_action = {'ctrl-f': 'vsplit', 'ctrl-s': 'split'}
+let g:fzf_layout = {'down': '~20%'}
+autocmd! FileType fzf set laststatus=0 |
+      \ autocmd BufLeave <buffer> set laststatus=2
+Plug 'junegunn/fzf.vim'
+nnoremap <silent> <C-P> :Files<CR>
+nnoremap <silent> <Leader>f :exe 'Rg ' . expand('<cword>')<CR>
+
+" vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline#extensions#whitespace#skip_indent_check_ft =
+      \ {'markdown': ['trailing']}
+let g:airline_detect_spelllang = 0
+let g:airline_exclude_preview = 1
+let g:airline_mode_map = {
+      \ 'Rc': 'REPLACE',
+      \ 'Rx': 'REPLACE',
+      \ 'ic': 'INSERT',
+      \ 'ix': 'INSERT',
+      \ }
+let g:airline_powerline_fonts = 1
+let g:airline_symbols = {}
+let g:airline_symbols.colnr = ' C:'
+let g:airline_symbols.dirty = '!'
+let g:airline_symbols.linenr = ' L:'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.notexists = '?'
+let g:airline_symbols.paste = 'P'
+let g:airline_symbols.spell = 'S'
+let g:airline_symbols.whitespace = ''
+let g:airline_theme = 'light'
+set linespace=0
+set noshowmode
+set ttimeoutlen=10
+
+" More plugins...
+Plug 'Valloric/ListToggle'
+Plug 'markonm/traces.vim'
+Plug 'nacitar/a.vim'
+Plug 'rhysd/conflict-marker.vim'
+Plug 'rhysd/vim-healthcheck'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-endwise'
+Plug 'vim-scripts/PreserveNoEOL'
+Plug 'wellle/context.vim'
+Plug 'wesQ3/vim-windowswap'
+Plug 'airblade/vim-rooter'
+let g:rooter_patterns = ['.git', '*.sln']
+let g:rooter_silent_chdir = 1
+Plug 'dciccale/guizoom.vim'
+nmap <silent> + :ZoomIn<CR>
+nmap <silent> - :ZoomOut<CR>
+nmap <silent> <Leader>= :ZoomReset<CR>
+Plug 'junegunn/limelight.vim'
+nnoremap <silent> <F6> :Limelight!!<CR>
+Plug 'junegunn/vim-easy-align'
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_in_visual = 0
+Plug 'machakann/vim-swap'
+omap a, <Plug>(swap-textobject-a)
+omap i, <Plug>(swap-textobject-i)
+xmap a, <Plug>(swap-textobject-a)
+xmap i, <Plug>(swap-textobject-i)
+Plug 'mbbill/undotree'
+nnoremap <silent> <F2> :UndotreeToggle<CR>
+Plug 'tmsvg/pear-tree'
+let g:pear_tree_smart_backspace = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_openers = 1
+Plug 'tpope/vim-commentary'
+autocmd vimrc FileType c,cpp setlocal commentstring=//\ %s
+if !has('gui_running') && has('clipboard')
+  Plug 'ojroques/vim-oscyank'
+  autocmd TextYankPost *
+        \ if v:event.operator is 'y' && v:event.regname is '' |
+        \   execute 'OSCYankRegister +' |
+        \ endif
+endif
+
+" Color scheme
+Plug 'chriskempson/base16-vim'
+
+call plug#end()
+
+silent! colorscheme base16-tomorrow-night
+highlight clear SpellBad
+highlight SpellBad cterm=underline gui=underline
+
+" Hangul IME
+if s:is_win
+  augroup vimrc
+    autocmd InsertEnter * :set noimdisable
+    autocmd InsertLeave * :set imdisable
+  augroup END
+endif
+
+" Some useful mappings
+command-bang Q q<bang>
+command-bang QA qa<bang>
+command-bang W w<bang>
+command-bang WQ wq<bang>
+nnoremap <Leader>1         :set sw=2<CR>
+nnoremap <Leader>2         :set sw=4<CR>
+nnoremap <Leader>3         :set sw=8<CR>
+nnoremap <Leader><Leader>1 :set ts=2<CR>
+nnoremap <Leader><Leader>2 :set ts=4<CR>
+nnoremap <Leader><Leader>3 :set ts=8<CR>
+nnoremap <Leader>a         :set paste<CR>i
+nnoremap <Leader>c         :let &cc = 81 - &cc<CR>:set cc?<CR>
+nnoremap <Leader>e         :set et! et?<CR>
+nnoremap <Leader>s         :set list! list?<CR>
+nnoremap <S-Tab>           <C-W>W
+nnoremap <Tab>             <C-W>w
+nnoremap q:                <Nop>
+onoremap ie                :exec 'normal! ggVG'<CR>
+autocmd vimrc InsertLeave * set nopaste
+
+" Press F5 to run
+if s:is_win
+  augroup vimrc
+    autocmd FileType c        nnoremap <Plug>(run)
+          \ :silent !gcc -o %:r.exe % & %:r & pause<CR>
+    autocmd FileType cpp      nnoremap <Plug>(run)
+          \ :silent !g++ -o %:r.exe % & %:r & pause<CR>
+    autocmd FileType dosbatch nnoremap <Plug>(run)
+          \ :silent !% & pause<CR>
+    autocmd FileType python   nnoremap <Plug>(run)
+          \ :silent !py % & pause<CR>
+    autocmd FileType c,cpp,dosbatch,python
+          \ imap <silent> <F5> <C-O>:up<CR><C-O><Plug>(run)
+    autocmd FileType c,cpp,dosbatch,python
+          \ nmap <silent> <F5> :up<CR><Plug>(run)
+  augroup END
+else
+  function! s:f5_run() abort
+    if &filetype =~# 'c\|cpp'
+      :make %:r && ./%:r
+    else
+      :!./%
+    endif
+  endfunction
+  imap <silent> <F5> <C-O>:up<CR><C-O>:call <SID>f5_run()<CR>
+  nmap <silent> <F5> :up<CR>:call <SID>f5_run()<CR>
+endif
