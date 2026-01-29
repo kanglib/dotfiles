@@ -1,3 +1,5 @@
+.config/fish/fish_variables
+
 .config/alacritty.toml
 .config/git/attributes
 .config/pip

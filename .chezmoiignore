@@ -9,6 +9,10 @@ zsh_plugins.txt
 .config/fd
 {{ end }}
 
+{{ if not (lookPath "fish") }}
+.config/fish
+{{ end }}
+
 {{ if not (lookPath "gdb") }}
 .config/gdb
 {{ end }}
