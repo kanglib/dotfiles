@@ -16,12 +16,43 @@ type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm.git"
 {{ end }}
 
+{{ if lookPath "fish" }}
+[".local/share/fish/plugins/fish-extract"]
+type = "git-repo"
+url = "https://github.com/shoriminimoe/fish-extract.git"
+
+[".local/share/fish/plugins/fish-systemd"]
+type = "git-repo"
+url = "https://github.com/wawa19933/fish-systemd.git"
+
+[".local/share/fish/plugins/plugin-git"]
+type = "git-repo"
+url = "https://github.com/jhillyerd/plugin-git.git"
+
+# https://github.com/IlanCosman/tide/wiki/Fish-version-compatibility
+{{- $tide := "v6.2.0" }}
+{{- if hasPrefix "fish, version 3." (output "fish" "--version") }}
+{{- $tide = "v5.0.1" }}
+{{- end }}
+[".local/share/fish/plugins/tide"]
+type = "archive"
+url = "https://github.com/IlanCosman/tide/archive/refs/tags/{{ $tide }}.tar.gz"
+exact = true
+stripComponents = 1
+
+[".local/share/fish/plugins/z"]
+type = "git-repo"
+url = "https://github.com/jethrokuan/z.git"
+{{ end }}
+
 {{ if lookPath "zsh" }}
 [".local/bin/antibody"]
 type = "archive-file"
 url = "https://github.com/getantibody/antibody/releases/latest/download/antibody_Linux_x86_64.tar.gz"
 path = "antibody"
+{{ end }}
 
+{{ if or (lookPath "fish") (lookPath "zsh") }}
 [".local/share/lscolors.sh"]
 type = "file"
 url = "https://github.com/trapd00r/LS_COLORS/raw/refs/heads/master/lscolors.sh"

@@ -14,6 +14,19 @@ antibody bundle \
     >~/.config/zsh/plugins.zsh
 {{- end }}
 
+{{ if lookPath "fish" -}}
+# fish_variables is removed by .chezmoiremove; rebuild tide's config in it.
+fish -c '
+if string match -q "3.*" $FISH_VERSION
+    emit _tide_init_install
+else
+    tide configure --auto --style=Lean --prompt_colors="16 colors" \
+        --show_time="24-hour format" --lean_prompt_height="Two lines" \
+        --prompt_connection=Disconnected --prompt_spacing=Sparse \
+        --icons="Few icons" --transient=No
+end'
+{{- end }}
+
 {{- $vim := "" }}
 {{- if lookPath "gvim" }}
 {{- $vim = "gvim -v" }}

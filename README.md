@@ -25,19 +25,19 @@
 
 ```sh
 # Arch
-sudo pacman -S bat eza fd git gvim ripgrep tmux zsh
+sudo pacman -S bat eza fd fish git gvim ripgrep tmux zsh
 sudo pacman -S cmake python-virtualenvwrapper git-delta
 sudo pacman -S inetutils lsb-release lua perl-term-readkey
 sudo pacman -S ctags
 
 # Red Hat
-sudo dnf install bat eza fd-find git vim-X11 ripgrep tmux zsh
+sudo dnf install bat eza fd-find fish git vim-X11 ripgrep tmux zsh
 sudo dnf install cmake python3-virtualenvwrapper git-delta vim-enhanced
 sudo dnf install gcc-c++ lua redhat-lsb-core sqlite
 sudo dnf install ctags
 
 # Ubuntu 22.04
-sudo apt install bat exa fd-find git vim-gtk3 ripgrep tmux zsh
+sudo apt install bat exa fd-find fish git vim-gtk3 ripgrep tmux zsh
 sudo apt install cmake virtualenvwrapper vim
 sudo apt install ctags
 ln -s $(which batcat) ~/.local/bin/bat
@@ -53,7 +53,14 @@ sh -c "$(curl -fsLS chezmoi.io/getlb)" -- init --apply kanglib
 # 🚀
 chsh -s /bin/zsh
 exec zsh
+
+# or fish
+chsh -s /usr/bin/fish
+exec fish
 ```
+
+With fish 3.3 (Ubuntu 22.04), fzf's key bindings are not loaded and tide is
+pinned to v5.0.1.
 
 ## vimrc
 
